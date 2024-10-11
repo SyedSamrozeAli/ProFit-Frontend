@@ -1,18 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import React from "react";
 
-function SideBarLink({ image, text, to, isOpen }) {
+function SideBarLink({ svg, text, to, isOpen }) {
+  const location = useLocation();
+  const isActive = location.pathname === to; // Check if the link is active
   return (
     <NavLink
       to={to}
-      className={({ isActive }) => (isActive ? "text-red-500" : "text-white")}
+      style={{
+        color: isActive ? "#FF1818" : "white",
+      }}
     >
       <div className="flex items-center space-x-2">
-        <img
-          src={image}
-          alt="Icon"
-          className="h-4 w-4 min-w-min sm:h-5 sm:w-5"
-        />
-        {isOpen && <p className="text-s sm:text-base">{text}</p>}
+        <div>{svg}</div>
+
+        {isOpen && <p className="text-sm ">{text}</p>}
       </div>
     </NavLink>
   );
