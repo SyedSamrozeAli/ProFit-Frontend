@@ -9,16 +9,10 @@ function DashboardLayout() {
   const title = currentPath.charAt(0).toUpperCase() + currentPath.slice(1).toLowerCase();
 
   return (
-    <div className='relative flex w-full h-screen'>
-        {/* Sidebar - now fixed for small screens */}
+    <div className='relative flex w-full h-screen'>       
         <SideBar />
-        
-        {/* Main content container */}
         <div className='flex-1'>
-          {/* Navbar */}
           <NavBar title={title} />
-          
-          {/* Main Content */}
           <div className='p-4 sm:p-8'>
             <Outlet />
           </div>
