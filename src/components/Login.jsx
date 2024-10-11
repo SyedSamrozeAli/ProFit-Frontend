@@ -30,7 +30,7 @@ function Login() {
                     autoClose:1500,
                 })
             }
-            // navigate("/user");
+            navigate("/admin");
         })
         .catch((error) => {
             console.log("error" , error.response);
