@@ -12,4 +12,5 @@ function SideBarLink({ image, text, to, isOpen }) {
   );
 }
 
+//export
 export default SideBarLink;
