@@ -10,13 +10,38 @@ function App() {
       element: <LoginPage />,
     },
     {
-      path: "/user",
+      path: "/admin",
       element: <DashboardLayout />,
-      // children:[
-      //   {
-      //     path:"/dashboard"
-      //   }
-      // ]
+      children: [
+        {
+          path: "dashboard",
+          element: <div className="pink">Dashboard Content</div>,
+        },
+        {
+          path: "members",
+          element: <div>hellsbdnsadnmsao</div>,
+        },
+        {
+          path: "trainers",
+          element: <div>hesdsadlsallo</div>,
+        },
+        {
+          path: "attendance",
+          element: <div>headssadasllo</div>,
+        },
+        {
+          path: "inventory",
+          element: <div>helasdasdaslo</div>,
+        },
+        {
+          path: "finance",
+          element: <div>helladsadao</div>,
+        },
+        {
+          path: "settings",
+          element: <div>hellocdafda</div>,
+        },
+      ],
     },
   ]);
   return (
