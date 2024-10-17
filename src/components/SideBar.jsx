@@ -188,13 +188,8 @@ function SideBar({ isOpen, setIsOpen }) {
   );
   return (
     <div
-<<<<<<< HEAD
-      className={`bg-black h-screen fixed ${
-        isOpen ? "w-[220px]" : "w-[50px]"
-=======
       className={`bg-black h-screen ${
         isOpen ? "w-[220px]" : "w-[60px]"
->>>>>>> b2498810d62e42895e935e01a875574f703556e1
       } relative top-0 left-0 z-40 transition-all duration-300 sidebar ${
         isOpen ? "sm:relative" : "absolute"
       }  sm:relative sm:z-auto`} /* Absolute positioning on mobile */
