@@ -15,7 +15,7 @@ function SideBar({ isOpen, setIsOpen }) {
 
   return (
     <div
-      className={`bg-black h-screen ${
+      className={`bg-black h-screen fixed ${
         isOpen ? "w-[220px]" : "w-[50px]"
       } relative top-0 left-0 z-40 transition-all duration-300 sidebar ${
         isOpen ? "sm:relative" : "absolute"
