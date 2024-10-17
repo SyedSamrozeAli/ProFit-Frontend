@@ -13,7 +13,6 @@ function Login() {
 
     const handleSubmmit=(e) => {
         e.preventDefault();
-        console.log(email,password);
         const data = {
             email:email,
             password:password
