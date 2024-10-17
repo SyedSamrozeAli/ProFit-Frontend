@@ -2,6 +2,9 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardLayout from "./Layout/DashboardLayout";
+import Trainer from "./pages/Trainer";
+import AddTrainer from "./components/AddTrainer";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,11 +22,21 @@ function App() {
         },
         {
           path: "members",
-          element: <div>hellsbdnsadnmsao</div>,
+          element: <div>headssadasllo</div>,
         },
         {
           path: "trainers",
-          element: <div>hesdsadlsallo</div>,
+          element: <Trainer />,
+          // children:[
+          //   {
+          //     path:"addtrainers",
+          //     element:<div className="bg-black">heelo</div>
+          //   }
+          // ]
+        },
+        {
+          path: "trainers/addtrainers",
+          element:<AddTrainer />
         },
         {
           path: "attendance",
@@ -43,6 +56,10 @@ function App() {
         },
       ],
     },
+    {
+      path:"*",
+      element:<ErrorPage />
+    }
   ]);
   return (
     <>
