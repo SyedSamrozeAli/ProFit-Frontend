@@ -16,7 +16,7 @@
 
 /* Full layout when sidebar is closed */
 .dashboard-layout.sidebar-closed {
-  grid-template-columns: 50px 1fr; /* Adjust for small sidebar */
+  grid-template-columns: 60px 1fr; /* Adjust for small sidebar */
 }
 
 /* Ensure content expands when sidebar is closed */
@@ -31,7 +31,7 @@
   }
 
   .dashboard-layout.sidebar-closed {
-    grid-template-columns: 50px 1fr; /* Small sidebar */
+    grid-template-columns: 60px 1fr; /* Small sidebar */
   }
 }
 
