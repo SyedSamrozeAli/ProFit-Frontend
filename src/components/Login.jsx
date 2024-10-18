@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
+    const [token , setToken] = useState("");
 
     const navigate = useNavigate();
 
@@ -22,6 +23,10 @@ function Login() {
         .then((response)=>{
             if(response.data.success == true){
                 console.log("Login Successfully: ",response);
+
+                const token = response.data.data.token;
+                localStorage.setItem('token',token);
+
                 setEmail("");
                 setPassword("");
                 const successToast = toast.success("Logged In SuccessFully");
