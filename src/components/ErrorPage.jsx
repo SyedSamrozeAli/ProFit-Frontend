@@ -10,7 +10,7 @@ function ErrorPage() {
   let url ="";
   useEffect(() => {
     const token = localStorage.getItem("token");
-    consle.log(isAuthenticated);
+    console.log(isAuthenticated);
     if (isAuthenticated) {
       // login()
       url = "/admin/dashboard" 
