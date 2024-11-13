@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import DisplayTrainer from "../components/DisplayTrainer";
-
+import DisplayTrainer from "../components/Trainers/DisplayTrainer";
+import NavBar from "../components/NavBar";
 function Trainer() {
 
   const navigate = useNavigate();
 
   return (
     <>
+    <NavBar title="Trainer" />
     <div className='w-full h-screen bg-white'>
       <div className='mx-6 md:mx-10 lg:mx-20 my-4'>
         <div className='flex justify-between items-center mb-5'>
@@ -21,5 +22,4 @@ function Trainer() {
     </>
   )
 }
-//hello
 export default Trainer
