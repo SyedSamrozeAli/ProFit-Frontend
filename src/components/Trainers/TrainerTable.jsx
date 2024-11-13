@@ -5,33 +5,19 @@ import { MdSecurityUpdate } from "react-icons/md";
 import StarRatings from 'react-star-ratings';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
-const handleUpdateField = () => {
-}
+import {useNavigate } from 'react-router-dom';
 
 function TrainerTable({ trainerData = [], handleDeleteField }) {
-
-  const [loadingProgress, setLoadingProgress] = useState(0);
-
-  useEffect(() => {
-    if (trainerData.length === 0) {
-      const interval = setInterval(() => {
-        setLoadingProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prevProgress + 10;
-        });
-      }, 50);
-
-      return () => clearInterval(interval); 
+    
+    const navigate = useNavigate();
+    
+    const handleUpdateField = (id) => {
+        navigate(`/admin/trainers/update/${id}`);
     }
-  }, [trainerData]);
 
   const data = trainerData.length > 0 ? trainerData.map((trainer) => ({
-    ID: trainer.id,
-    Name: trainer.name,
+    ID: trainer.trainer_id,
+    Name: trainer.trainer_name,
     Age: trainer.age,
     Hire_Date: trainer.hire_date,
     status: "Active",
@@ -48,10 +34,10 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
     Salary: Math.floor(trainer.salary),
     action: (
       <div className="flex space-x-2">
-        <button onClick={() => handleDeleteField(trainer.id)} className='p-2 border-2 border-red-500 rounded-full'>
+        <button onClick={() => handleDeleteField(trainer.trainer_id)} className='p-2'>
           <MdDeleteOutline className='text-xl' />
         </button>
-        <button onClick={handleUpdateField} className='p-2 border-2 border-blue-500 rounded-full'>
+        <button onClick={() => handleUpdateField(trainer.trainer_id)} className='p-2 '>
           <MdSecurityUpdate className='text-xl' />
         </button>
       </div>
@@ -100,9 +86,6 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
       selector: row => row.status,
       cell: row => (
         <span style={{
-          fontWeight: 'bold',
-          borderColor: row.status === 'Active' ? '#DFFFD7' : '#FFE8E8',
-          border: '2px solid',
           color: row.status === 'Active' ? '#0D7300' : '#EB0707',
           background: row.status === 'Active' ? '#DFFFD7' : '#FFE8E8',
           padding: '4px',

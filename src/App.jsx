@@ -3,8 +3,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardLayout from "./Layout/DashboardLayout";
 import Trainer from "./pages/Trainer";
-import AddTrainer from "./components/AddTrainer";
+import AddTrainer from "./components/Trainers/AddTrainer";
 import ErrorPage from "./components/ErrorPage";
+import UpdateTrainer from "./components/Trainers/UpdateTrainer";
+import Member from "./pages/Member";
+import AddMember from "./components/Members/AddMember";
+import { AuthProvider } from "./Auth/ContextAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,7 +19,9 @@ function App() {
     },
     {
       path: "/admin",
-      element: <DashboardLayout />,
+      element: (
+        <ProtectedRoute element={<DashboardLayout />} />
+      ),
       children: [
         {
           path: "dashboard",
@@ -22,21 +29,23 @@ function App() {
         },
         {
           path: "members",
-          element: <div>headssadasllo</div>,
+          element: <Member />,
+        },
+        {
+          path: "members/addmembers",
+          element: <AddMember />,
         },
         {
           path: "trainers",
           element: <Trainer />,
-          // children:[
-          //   {
-          //     path:"addtrainers",
-          //     element:<div className="bg-black">heelo</div>
-          //   }
-          // ]
         },
         {
           path: "trainers/addtrainers",
-          element:<AddTrainer />
+          element: <AddTrainer />,
+        },
+        {
+          path: "trainers/update/:id",
+          element: <UpdateTrainer />,
         },
         {
           path: "attendance",
@@ -57,14 +66,15 @@ function App() {
       ],
     },
     {
-      path:"*",
-      element:<ErrorPage />
-    }
+      path: "*",
+      element: <ErrorPage />,
+    },
   ]);
+
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   );
 }
 
