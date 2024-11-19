@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import DisplayTrainer from "../components/Trainers/DisplayTrainer";
+import DisplayMember from "../components/Members/DisplayMember";
 import NavBar from "../components/NavBar";
 
 function Member() {
@@ -17,7 +17,7 @@ function Member() {
           className='bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-white text-sm '
           onClick={() => navigate("/admin/members/addmembers")}>+  Add Member</button>
         </div>
-        {/* <DisplayTrainer /> */}
+        <DisplayMember />
       </div>
     </div>
     </>

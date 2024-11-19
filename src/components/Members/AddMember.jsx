@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import back from "/images/backbutton.png";
-import profileImage from "/images/profile.png";
+import profileImage from "/images/profileimage.png";
 import MemberForm from "../Forms/MemberForm";
 import NavBar from "../NavBar";
 
-function AddMember() {
-  const navigate = useNavigate();
+//this function is responsible for adding members to the database
 
+function AddMember() {
+  
+  const navigate = useNavigate();
+  
   const handleBackButton = () => {
     navigate("/admin/members");
   };
@@ -51,6 +54,7 @@ function AddMember() {
           profileImage={profileImage}
           member={member}
           setMember={setMember}
+          btnText ={"Save"}
         />
       </div>
     </>

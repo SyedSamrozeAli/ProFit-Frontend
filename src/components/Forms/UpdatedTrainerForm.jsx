@@ -44,11 +44,7 @@ function UpdatedTrainerForm({ msg, profileImage, requestType, URL, initialTraine
           });
         }
       });
-    console.log("updated samroze" , updatedData);
   };
-
-  console.log("dsa",trainer,initialTrainer);
-  // for handling the input through forms
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
