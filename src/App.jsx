@@ -11,6 +11,7 @@ import AddMember from "./components/Members/AddMember";
 import { AuthProvider } from "./Auth/ContextAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateMember from "./components/Members/UpdateMember";
+import AttendanceTable from "./pages/Attendance";
 
 function App() {
   const router = createBrowserRouter([
@@ -54,7 +55,7 @@ function App() {
         },
         {
           path: "attendance",
-          element: <div>headssadasllo</div>,
+          element: <AttendanceTable/>,
         },
         {
           path: "inventory",
