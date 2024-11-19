@@ -10,6 +10,7 @@ import Member from "./pages/Member";
 import AddMember from "./components/Members/AddMember";
 import { AuthProvider } from "./Auth/ContextAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UpdateMember from "./components/Members/UpdateMember";
 
 function App() {
   const router = createBrowserRouter([
@@ -34,6 +35,10 @@ function App() {
         {
           path: "members/addmembers",
           element: <AddMember />,
+        },
+        {
+          path: "member/update/:id",
+          element: <UpdateMember/>,
         },
         {
           path: "trainers",
