@@ -12,6 +12,10 @@ import { AuthProvider } from "./Auth/ContextAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateMember from "./components/Members/UpdateMember";
 import AttendanceTable from "./pages/Attendance";
+import Inventory from "./pages/Inventory";
+import AddInventory from "./components/Inventory/AddInventory";
+import UpdateInventory from "./components/Inventory/UpdateInventory";
+import Equipment from "./pages/Equipment";
 
 function App() {
   const router = createBrowserRouter([
@@ -59,7 +63,19 @@ function App() {
         },
         {
           path: "inventory",
-          element: <div>helasdasdaslo</div>,
+          element: <Inventory/>,
+        },
+        {
+          path:"inventory/addinventory",
+          element:<AddInventory/>
+        },
+        {
+          path:"inventory/update/:id",
+          element:<UpdateInventory />
+        },
+        {
+          path: "equipment",
+          element: <Equipment/>,
         },
         {
           path: "finance",

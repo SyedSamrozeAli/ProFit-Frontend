@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import MemberTable from './MemberTable';
+import EquipmentTable from './EquipmentTable';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import 'react-circular-progressbar/dist/styles.css';
 
-function DisplayMember() {
-  const [memberData, setMemberData] = useState([]);
+function DisplayEquipment() {
+  const [equipmentData, setEquipmentData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(false);
 
+  // This will start the progress bar animation when the component mounts
   useEffect(() => {
     const interval = setInterval(() => {
       setLoadingProgress((prevProgress) => {
@@ -27,14 +28,14 @@ function DisplayMember() {
     return () => clearInterval(interval); // Clean up interval on component unmount
   }, []);
 
-  // Fetch the trainer data once when the component mounts
+  // Fetch the equipment data once when the component mounts
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token) {
       setLoading(true);
       axios
-        .get('http://profit-backend.test/api/member', {
+        .get('http://profit-backend.test/api/equipment', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,8 +45,7 @@ function DisplayMember() {
             console.log("status error");
           }
           else{
-            setMemberData(response.data.data);
-            console.log(memberData);
+            setEquipmentData(response.data.data);
           }
           setLoading(false);
           setLoadingProgress(100); 
@@ -65,7 +65,7 @@ function DisplayMember() {
             toast.error('Unauthorized access. Please log in again.');
           } else {
             console.log(error);
-            toast.error('Error fetching the Member details.');
+            toast.error('Error fetching the Equipment details.');
           }
         });
     } else {
@@ -78,33 +78,33 @@ function DisplayMember() {
   const handleDeleteField = (id) => {
     const token = localStorage.getItem('token');
     
-    const deleteMember = () => {
+    const deleteEquipment = () => {
       axios
-        .delete(`http://profit-backend.test/api/member/${id}`, {
+        .delete(`http://profit-backend.test/api/equipment/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          setMemberData((prevData) =>
-            prevData.filter((member) => member.member_id !== id)
+            setEquipmentData((prevData) =>
+            prevData.filter((equipment) => equipment.equipment_id !== id)
           );
-          toast.success('Member deleted successfully.');
+          toast.success('Selected Equipment deleted successfully.');
         })
         .catch((error) => {
           console.error(error);
-          toast.error('Error deleting the trainer.');
+          toast.error('Error deleting the Equipment.');
         });
     };
   
     // Show the custom confirmation dialog
     confirmAlert({
       title: 'Confirm Delete',
-      message: 'Are you sure you want to delete this trainer?',
+      message: 'Are you sure you want to delete this Equipment?',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => deleteMember(),
+          onClick: () => deleteEquipment(),
           className: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-all'
         },
         {
@@ -141,7 +141,6 @@ function DisplayMember() {
 
   return (
     <>
-    {/* <NavBar title="DisplayTrainer" /> */}
       {loading ? (
         // Loading state with progress bar
         <div className="flex items-center justify-center h-screen">
@@ -150,9 +149,9 @@ function DisplayMember() {
               value={loadingProgress}
               text={`${loadingProgress}%`}
               styles={buildStyles({
-                textColor: '#000', // Color of the percentage text
-                pathColor: '#ff0000', // Set the path color to red (#ff0000)
-                trailColor: '#ffffff', // Background color of the circular trail
+                textColor: '#000', 
+                pathColor: '#ff0000',
+                trailColor: '#ffffff', 
               })}
             />
           </div>
@@ -160,13 +159,13 @@ function DisplayMember() {
       ) : (
         // If not loading and no error occurred, render data or show "No trainer found"
         !error && (
-          memberData.length === 0 ? (
+        equipmentData.length === 0 ? (
             <div class="flex flex-col items-center justify-center pt-20 ">
                 <img src='/images/notrainer.png' alt='no trainer image' className='h-80'/>
             </div>
           ) : (
-            <MemberTable
-              memberData={memberData}
+            <EquipmentTable
+              equipmentData={equipmentData}
               handleDeleteField={handleDeleteField}
             />
           )
@@ -176,4 +175,4 @@ function DisplayMember() {
   );
 }
 
-export default DisplayMember;
+export default DisplayEquipment;
