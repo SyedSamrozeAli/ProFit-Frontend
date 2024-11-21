@@ -13,7 +13,6 @@ function DisplayMember() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(false);
 
-  // This will start the progress bar animation when the component mounts
   useEffect(() => {
     const interval = setInterval(() => {
       setLoadingProgress((prevProgress) => {
@@ -46,6 +45,7 @@ function DisplayMember() {
           }
           else{
             setMemberData(response.data.data);
+            console.log(memberData);
           }
           setLoading(false);
           setLoadingProgress(100); 
