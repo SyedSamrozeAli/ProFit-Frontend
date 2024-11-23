@@ -4,6 +4,7 @@ import { MdDeleteOutline, MdSecurityUpdate } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
 function MemberTable({ memberData = [], handleDeleteField }) {
+  
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -112,6 +113,11 @@ function MemberTable({ memberData = [], handleDeleteField }) {
     },
   };
 
+  const handleRowClick = (row) => {
+    navigate(`/admin/member/details/${row.member_id}`);
+  };
+
+
   return (
     <div className="p-4 border border-gray-300 rounded-lg shadow-sm overflow-x-auto">
       {/* Search bar */}
@@ -134,6 +140,7 @@ function MemberTable({ memberData = [], handleDeleteField }) {
           striped
           fixedHeader
           pagination
+          onRowClicked={handleRowClick}
         />
       ) : (
         <div className="text-center py-8 text-gray-500">
