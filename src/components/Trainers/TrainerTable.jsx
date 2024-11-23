@@ -137,6 +137,11 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
         },
     };
 
+    const handleRowClick = (row) => {
+        console.log(row);
+        navigate(`/admin/trainer/details/${row.ID}`)
+    }
+
     return (
         <div className="p-4 border border-gray-300 rounded-lg shadow-sm overflow-x-auto">
             <div className="flex justify-between items-center mb-4">
@@ -156,6 +161,7 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
                     striped
                     fixedHeader
                     pagination
+                    onRowClicked={handleRowClick}
                 />
             ) : (
                 <div className="flex justify-center items-center h-48">
