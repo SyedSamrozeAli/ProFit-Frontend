@@ -17,6 +17,9 @@ import AddInventory from "./components/Inventory/AddInventory";
 import UpdateInventory from "./components/Inventory/UpdateInventory";
 import Equipment from "./pages/Equipment";
 import TrainerAttendance from "./pages/TrainerAttendance";
+import MemberLayout from "./components/Members/MemberLayout";
+import TrainerLayout from "./components/Trainers/TrainerLayout";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -46,6 +49,10 @@ function App() {
           element: <UpdateMember/>,
         },
         {
+          path:"member/details/:id",
+          element:<MemberLayout />
+        },
+        {
           path: "trainers",
           element: <Trainer />,
         },
@@ -56,6 +63,10 @@ function App() {
         {
           path: "trainers/update/:id",
           element: <UpdateTrainer />,
+        },
+        {
+          path:"trainer/details/:id",
+          element:<TrainerLayout />
         },
         {
           path: "attendance",
