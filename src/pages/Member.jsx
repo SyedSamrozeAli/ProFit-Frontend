@@ -1,25 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import DisplayTrainer from "../components/Trainers/DisplayTrainer";
+import DisplayMember from "../components/Members/DisplayMember";
 import NavBar from "../components/NavBar";
-function Trainer() {
+
+function Member() {
 
   const navigate = useNavigate();
 
   return (
     <>
-    <NavBar title="Trainer" />
+    <NavBar title="Member" />
     <div className='w-full h-screen bg-white'>
       <div className='mx-6 md:mx-10 lg:mx-20 my-4'>
         <div className='flex justify-between items-center mb-5'>
-          <p className='font-semibold text-lg'>Trainers Page</p>
+          <p className='font-semibold text-lg'>Members Page</p>
           <button 
           className='bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-white text-sm '
-          onClick={() => navigate("/admin/trainers/addtrainers")}>+  Add Trainer</button>
+          onClick={() => navigate("/admin/members/addmembers")}>+  Add Member</button>
         </div>
-        <DisplayTrainer />
+        <DisplayMember />
       </div>
     </div>
     </>
   )
 }
-export default Trainer
+export default Member

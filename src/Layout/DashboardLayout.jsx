@@ -40,7 +40,7 @@ function DashboardLayout() {
         isSidebarOpen ? "sidebar-open" : "sidebar-closed"
       }`}
     >
-      <NavBar title={title} />
+      {/* <NavBar title={title} /> */}
       <SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <Outlet />
     </div>

@@ -3,8 +3,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardLayout from "./Layout/DashboardLayout";
 import Trainer from "./pages/Trainer";
-import AddTrainer from "./components/AddTrainer";
+import AddTrainer from "./components/Trainers/AddTrainer";
 import ErrorPage from "./components/ErrorPage";
+import UpdateTrainer from "./components/Trainers/UpdateTrainer";
+import Member from "./pages/Member";
+import AddMember from "./components/Members/AddMember";
+import { AuthProvider } from "./Auth/ContextAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import UpdateMember from "./components/Members/UpdateMember";
+import Attendance from "./pages/Attendance";
+import Inventory from "./pages/Inventory";
+import AddInventory from "./components/Inventory/AddInventory";
+import UpdateInventory from "./components/Inventory/UpdateInventory";
+import Equipment from "./pages/Equipment";
+import TrainerAttendance from "./pages/TrainerAttendance";
+import MemberLayout from "./components/Members/MemberLayout";
+import TrainerLayout from "./components/Trainers/TrainerLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,7 +28,9 @@ function App() {
     },
     {
       path: "/admin",
-      element: <DashboardLayout />,
+      element: (
+        <ProtectedRoute element={<DashboardLayout />} />
+      ),
       children: [
         {
           path: "dashboard",
@@ -22,29 +38,59 @@ function App() {
         },
         {
           path: "members",
-          element: <div>headssadasllo</div>,
+          element: <Member />,
+        },
+        {
+          path: "members/addmembers",
+          element: <AddMember />,
+        },
+        {
+          path: "member/update/:id",
+          element: <UpdateMember/>,
+        },
+        {
+          path:"member/details/:id",
+          element:<MemberLayout />
         },
         {
           path: "trainers",
           element: <Trainer />,
-          // children:[
-          //   {
-          //     path:"addtrainers",
-          //     element:<div className="bg-black">heelo</div>
-          //   }
-          // ]
         },
         {
           path: "trainers/addtrainers",
-          element:<AddTrainer />
+          element: <AddTrainer />,
+        },
+        {
+          path: "trainers/update/:id",
+          element: <UpdateTrainer />,
+        },
+        {
+          path:"trainer/details/:id",
+          element:<TrainerLayout />
         },
         {
           path: "attendance",
-          element: <div>headssadasllo</div>,
+          element: <Attendance/>,
+        },
+        {
+          path:"trainerattendance",
+          element:<TrainerAttendance />
         },
         {
           path: "inventory",
-          element: <div>helasdasdaslo</div>,
+          element: <Inventory/>,
+        },
+        {
+          path:"inventory/addinventory",
+          element:<AddInventory/>
+        },
+        {
+          path:"inventory/update/:id",
+          element:<UpdateInventory />
+        },
+        {
+          path: "equipment",
+          element: <Equipment/>,
         },
         {
           path: "finance",
@@ -57,14 +103,15 @@ function App() {
       ],
     },
     {
-      path:"*",
-      element:<ErrorPage />
-    }
+      path: "*",
+      element: <ErrorPage />,
+    },
   ]);
+
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   );
 }
 
