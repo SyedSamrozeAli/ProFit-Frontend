@@ -236,8 +236,14 @@ function SideBar({ isOpen, setIsOpen }) {
           />
           <SideBarLink
             svg={attendanceSVG}
-            text="Manage Attendance"
+            text="Member Attendance"
             to="/admin/attendance"
+            isOpen={isOpen}
+          />
+          <SideBarLink
+            svg={attendanceSVG}
+            text="Trainer Attendance"
+            to="/admin/trainerattendance"
             isOpen={isOpen}
           />
           <SideBarLink

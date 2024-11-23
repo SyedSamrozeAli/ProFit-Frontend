@@ -11,11 +11,14 @@ import AddMember from "./components/Members/AddMember";
 import { AuthProvider } from "./Auth/ContextAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateMember from "./components/Members/UpdateMember";
-import AttendanceTable from "./pages/Attendance";
+import Attendance from "./pages/Attendance";
 import Inventory from "./pages/Inventory";
 import AddInventory from "./components/Inventory/AddInventory";
 import UpdateInventory from "./components/Inventory/UpdateInventory";
 import Equipment from "./pages/Equipment";
+import TrainerAttendance from "./pages/TrainerAttendance";
+import MemberLayout from "./components/Members/MemberLayout";
+import TrainerLayout from "./components/Trainers/TrainerLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +49,10 @@ function App() {
           element: <UpdateMember/>,
         },
         {
+          path:"member/details/:id",
+          element:<MemberLayout />
+        },
+        {
           path: "trainers",
           element: <Trainer />,
         },
@@ -58,8 +65,16 @@ function App() {
           element: <UpdateTrainer />,
         },
         {
+          path:"trainer/details/:id",
+          element:<TrainerLayout />
+        },
+        {
           path: "attendance",
-          element: <AttendanceTable/>,
+          element: <Attendance/>,
+        },
+        {
+          path:"trainerattendance",
+          element:<TrainerAttendance />
         },
         {
           path: "inventory",

@@ -2,21 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../components/NavBar";
 import { toast } from "react-toastify";
-import AddAttendance from "../components/Attendance/AddAttendance";
+import TrainerAddAttendance from "../components/Attendance/TrainerAddAttendance";
 
-function Attendance() {
+function TrainerAttendance() {
   const [attendanceData, setAttendanceData] = useState([]);
-  const [updatedMembers, setUpdatedMembers] = useState({});
+  const [updatedTrainers, setUpdatedTrainers] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
 
   const token = localStorage.getItem("token");
 
+  //taking the user given date
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
   };
 
-  // Function to handle field updates and track updated members
-  const handleAttendanceChange = (member_id, field, value) => {
+  // Function to handle field updates and track updated trainers
+  const handleAttendanceChange = (trainer_id, field, value) => {
     let formattedValue = value;
   
     if (field === "check_in_time" || field === "check_out_time") {
@@ -28,7 +29,7 @@ function Attendance() {
   
     setAttendanceData((prevData) =>
       prevData.map((attendance) => {
-        if (attendance.member_id === member_id) {
+        if (attendance.trainer_id === trainer_id) {
           const updatedAttendance = { ...attendance, [field]: formattedValue };
   
           // Handle status-specific changes
@@ -38,11 +39,11 @@ function Attendance() {
               updatedAttendance.check_out_time = null;
             }
   
-            // Remove member from updates if status is null
+            // Remove trainer from updates if status is null
             if (value === null) {
-              setUpdatedMembers((prevUpdates) => {
+              setUpdatedTrainers((prevUpdates) => {
                 const newUpdates = { ...prevUpdates };
-                delete newUpdates[member_id];
+                delete newUpdates[trainer_id];
                 return newUpdates;
               });
               return updatedAttendance; // Exit early without tracking
@@ -50,9 +51,9 @@ function Attendance() {
           }
   
           // Track updates for non-null status
-          setUpdatedMembers((prevUpdates) => ({
+          setUpdatedTrainers((prevUpdates) => ({
             ...prevUpdates,
-            [member_id]: updatedAttendance,
+            [trainer_id]: updatedAttendance,
           }));
   
           return updatedAttendance;
@@ -66,12 +67,12 @@ function Attendance() {
 
   // Function to handle saving updated attendance
   const handleSave = () => {
-    // Filter out members with `attendance_status` set to null
-    const updatedData = Object.values(updatedMembers).filter(
+    // Filter out trainers with `attendance_status` set to null
+    const updatedData = Object.values(updatedTrainers).filter(
       ({ attendance_status }) => attendance_status !== null
     ).map(
-      ({ member_id, check_in_time, check_out_time, attendance_status }) => ({
-        member_id,
+      ({ trainer_id, check_in_time, check_out_time, attendance_status }) => ({
+        trainer_id,
         check_in_time,
         check_out_time,
         attendance_status,
@@ -91,13 +92,13 @@ function Attendance() {
     console.log("Data to send:", dataToSend);
   
     axios
-      .post("http://profit-backend.test/api/member-attendance", dataToSend, {
+      .post("http://profit-backend.test/api/trainer-attendance", dataToSend, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         console.log("Attendance updated successfully:", response.data);
         toast.success("Attendance saved successfully!");
-        setUpdatedMembers({}); // Reset updates after successful save
+        setUpdatedTrainers({}); // Reset updates after successful save
       })
       .catch((error) => {
         if('The attendance.0.check_out_time field must be a date after attendance.0.check_in_time.'){
@@ -119,7 +120,7 @@ function Attendance() {
 
     axios
       .get(
-        `http://profit-backend.test/api/member-attendance?attendance_date=${selectedDate}`,
+        `http://profit-backend.test/api/trainer-attendance?attendance_date=${selectedDate}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -141,7 +142,7 @@ function Attendance() {
 
   return (
     <>
-      <NavBar title="Member Attendance" />
+      <NavBar title="Trainer Attendance" />
       <div className="w-full h-screen bg-white">
         <div className="mx-6 my-4">
           <div className="flex justify-between items-center mb-5">
@@ -158,7 +159,7 @@ function Attendance() {
               Save
             </button>
           </div>
-          <AddAttendance
+          <TrainerAddAttendance
             attendanceData={attendanceData}
             handleAttendanceChange={handleAttendanceChange}
           />
@@ -168,4 +169,4 @@ function Attendance() {
   );
 }
 
-export default Attendance;
+export default TrainerAttendance;
