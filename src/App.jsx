@@ -11,12 +11,12 @@ import AddMember from "./components/Members/AddMember";
 import { AuthProvider } from "./Auth/ContextAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UpdateMember from "./components/Members/UpdateMember";
-import AttendanceTable from "./pages/Attendance";
+import Attendance from "./pages/Attendance";
 import Inventory from "./pages/Inventory";
 import AddInventory from "./components/Inventory/AddInventory";
 import UpdateInventory from "./components/Inventory/UpdateInventory";
 import Equipment from "./pages/Equipment";
-
+import TrainerAttendance from "./pages/TrainerAttendance";
 function App() {
   const router = createBrowserRouter([
     {
@@ -59,7 +59,11 @@ function App() {
         },
         {
           path: "attendance",
-          element: <AttendanceTable/>,
+          element: <Attendance/>,
+        },
+        {
+          path:"trainerattendance",
+          element:<TrainerAttendance />
         },
         {
           path: "inventory",
