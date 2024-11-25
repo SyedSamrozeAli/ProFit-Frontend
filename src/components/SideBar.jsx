@@ -359,13 +359,13 @@ function SideBar({ isOpen, setIsOpen }) {
               <div className="ml-4 flex flex-col gap-3 mt-4">
                 <SideBarLink
                   text="Member Finance"
-                  to="/admin/finance"
+                  to="/admin/member/payments"
                   isOpen={isOpen}
                 />
                 <SideBarLink
                   className="mt-4"
                   text="Trainer Finance"
-                  to="/admin/trainerfinance"
+                  to="/admin/trainer/payments"
                   isOpen={isOpen}
                 />
                 <SideBarLink
