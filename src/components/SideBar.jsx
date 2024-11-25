@@ -1,18 +1,32 @@
-import { FiMenu } from "react-icons/fi"; // React icon for toggle
+import React, { useState, useEffect } from "react";
+import { FiMenu, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Logo from "/images/profit-logo.png";
 import SideBarLink from "./SideBarLink";
 import "../styles/dashboard.css";
 
 function SideBar({ isOpen, setIsOpen }) {
+  const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+  const [isFinanceOpen, setIsFinanceOpen] = useState(false);
+
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const toggleAttendanceDropdown = () => {
+    setIsAttendanceOpen(!isAttendanceOpen);
+  };
+
+  const toggleFinanceDropdown = () => {
+    setIsFinanceOpen(!isFinanceOpen);
+  };
+
+  // ... (keep all the SVG definitions)
   const dashboardSVG = (
     <svg
       width="26"
       height="26"
       viewBox="0 0 26 26"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -34,7 +48,7 @@ function SideBar({ isOpen, setIsOpen }) {
       width="26"
       height="26"
       viewBox="0 0 26 26"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -59,12 +73,34 @@ function SideBar({ isOpen, setIsOpen }) {
       />
     </svg>
   );
+  const trainerSVG = (
+    <svg
+      width="23"
+      height="22"
+      viewBox="0 0 23 22"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.80703 17C10.532 14.375 13.067 12.5 15.987 12.81C18.767 13.105 20.977 15.45 21.117 18.24C21.152 18.975 21.052 19.68 20.837 20.335C20.707 20.735 20.317 21 19.892 21H5.00103C2.47703 21 0.584032 18.6905 1.07903 16.2155L4.12203 1H10.122L12.122 4.5L7.83703 7.565L6.62203 6"
+        fill="currentColor"
+      />
+      <path
+        d="M9.80703 17C10.532 14.375 13.067 12.5 15.987 12.81C18.767 13.105 20.977 15.45 21.117 18.24C21.152 18.975 21.052 19.68 20.837 20.335C20.707 20.735 20.317 21 19.892 21H5.00103C2.47703 21 0.584032 18.6905 1.07903 16.2155L4.12203 1H10.122L12.122 4.5L7.83703 7.565L6.62203 6M7.84203 7.565L10.122 16"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-miterlimit="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
   const attendanceSVG = (
     <svg
       width="26"
       height="27"
       viewBox="0 0 26 27"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_293_4208)">
@@ -111,7 +147,7 @@ function SideBar({ isOpen, setIsOpen }) {
       width="26"
       height="27"
       viewBox="0 0 26 27"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -120,12 +156,12 @@ function SideBar({ isOpen, setIsOpen }) {
       />
     </svg>
   );
-  const inventorySVG = (
+  const equipmentSVG = (
     <svg
       width="26"
       height="27"
       viewBox="0 0 26 27"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_293_4223)">
@@ -160,12 +196,30 @@ function SideBar({ isOpen, setIsOpen }) {
       </defs>
     </svg>
   );
+  const inventorySVG = (
+    <svg
+      width="26"
+      height="27"
+      viewBox="0 0 53 53"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M53 13.25L26.3013 0L0 13.25V16.5625H3.3125V53H9.9375V23.1875H43.0625V53H49.6875V16.5625H53V13.25ZM13.25 19.875V16.5625H19.875V19.875H13.25ZM23.1875 19.875V16.5625H29.8125V19.875H23.1875ZM33.125 19.875V16.5625H39.75V19.875H33.125Z"
+        fill="currentColor"
+      />
+      <path
+        d="M19.875 29.8125H16.5625V26.5H13.25V36.4375H23.1875V26.5H19.875V29.8125ZM19.875 43.0625H16.5625V39.75H13.25V49.6875H23.1875V39.75H19.875V43.0625ZM33.125 43.0625H29.8125V39.75H26.5V49.6875H36.4375V39.75H33.125V43.0625Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
   const settingsSVG = (
     <svg
       width="26"
       height="27"
       viewBox="0 0 26 27"
-      fill="none"
+      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_293_4256)">
@@ -186,13 +240,14 @@ function SideBar({ isOpen, setIsOpen }) {
       </defs>
     </svg>
   );
+
   return (
     <div
       className={`bg-black h-screen ${
         isOpen ? "w-[220px]" : "w-[60px]"
       } relative top-0 left-0 z-40 transition-all duration-300 sidebar ${
         isOpen ? "sm:relative" : "absolute"
-      }  sm:relative sm:z-auto`} /* Absolute positioning on mobile */
+      }  sm:relative sm:z-auto`}
     >
       <div className="p-4 flex flex-col gap-4 justify-center">
         <button
@@ -229,23 +284,47 @@ function SideBar({ isOpen, setIsOpen }) {
             isOpen={isOpen}
           />
           <SideBarLink
-            svg={memberSVG}
+            svg={trainerSVG}
             text="Manage Trainers"
             to="/admin/trainers"
             isOpen={isOpen}
           />
-          <SideBarLink
-            svg={attendanceSVG}
-            text="Member Attendance"
-            to="/admin/attendance"
-            isOpen={isOpen}
-          />
-          <SideBarLink
-            svg={attendanceSVG}
-            text="Trainer Attendance"
-            to="/admin/trainerattendance"
-            isOpen={isOpen}
-          />
+
+          {/* Attendance Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleAttendanceDropdown}
+              className={`flex items-center justify-between w-full text-white  ${
+                isOpen ? "" : "justify-center"
+              }`}
+            >
+              <div className="flex items-center ">
+                {attendanceSVG}
+                {isOpen && <span className="ml-2">Attendance</span>}
+              </div>
+              {isOpen && (
+                <span>
+                  {isAttendanceOpen ? <FiChevronUp /> : <FiChevronDown />}
+                </span>
+              )}
+            </button>
+            {isAttendanceOpen && isOpen && (
+              <div className="ml-4 flex flex-col gap-4 mt-4">
+                <SideBarLink
+                  text="Member Attendance"
+                  to="/admin/attendance"
+                  isOpen={isOpen}
+                />
+                <SideBarLink
+                  className="mt-4"
+                  text="Trainer Attendance"
+                  to="/admin/trainerattendance"
+                  isOpen={isOpen}
+                />
+              </div>
+            )}
+          </div>
+
           <SideBarLink
             svg={inventorySVG}
             text="Inventory"
@@ -253,23 +332,57 @@ function SideBar({ isOpen, setIsOpen }) {
             isOpen={isOpen}
           />
           <SideBarLink
-            svg={inventorySVG}
+            svg={equipmentSVG}
             text="Equipment"
             to="/admin/equipment"
             isOpen={isOpen}
           />
-          <SideBarLink
-            svg={paymentSVG}
-            text="Member Finance"
-            to="/admin/member/payments"
-            isOpen={isOpen}
-          />
-          <SideBarLink
-            svg={paymentSVG}
-            text="Trainer Finance"
-            to="/admin/trainer/payments"
-            isOpen={isOpen}
-          />
+
+          <div className="relative">
+            <button
+              onClick={toggleFinanceDropdown}
+              className={`flex items-center justify-between w-full text-white  ${
+                isOpen ? "" : "justify-center"
+              }`}
+            >
+              <div className="flex items-center ">
+                {paymentSVG}
+                {isOpen && <span className="ml-2">Manage Finance</span>}
+              </div>
+              {isOpen && (
+                <span>
+                  {isFinanceOpen ? <FiChevronUp /> : <FiChevronDown />}
+                </span>
+              )}
+            </button>
+            {isFinanceOpen && isOpen && (
+              <div className="ml-4 flex flex-col gap-3 mt-4">
+                <SideBarLink
+                  text="Member Finance"
+                  to="/admin/finance"
+                  isOpen={isOpen}
+                />
+                <SideBarLink
+                  className="mt-4"
+                  text="Trainer Finance"
+                  to="/admin/trainerfinance"
+                  isOpen={isOpen}
+                />
+                <SideBarLink
+                  className="mt-4"
+                  text="Inventory Finance"
+                  to="/admin/inventoryfinance"
+                  isOpen={isOpen}
+                />
+                <SideBarLink
+                  className="mt-4"
+                  text="Equipment Finance"
+                  to="/admin/inventoryfinance"
+                  isOpen={isOpen}
+                />
+              </div>
+            )}
+          </div>
           <SideBarLink
             svg={settingsSVG}
             text="Settings"

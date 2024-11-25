@@ -1,6 +1,5 @@
 // import React from "react";
 import SideBar from "../components/SideBar";
-import NavBar from "../components/NavBar";
 import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/dashboard.css";

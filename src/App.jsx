@@ -31,9 +31,7 @@ function App() {
     },
     {
       path: "/admin",
-      element: (
-        <ProtectedRoute element={<DashboardLayout />} />
-      ),
+      element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
         {
           path: "dashboard",
@@ -51,11 +49,11 @@ function App() {
         },
         {
           path: "member/update/:id",
-          element: <UpdateMember/>,
+          element: <UpdateMember />,
         },
         {
-          path:"member/details/:id",
-          element:<MemberLayout />
+          path: "member/details/:id",
+          element: <MemberLayout />,
         },
         {
           path:"member/payments",
@@ -80,8 +78,8 @@ function App() {
           element: <UpdateTrainer />,
         },
         {
-          path:"trainer/details/:id",
-          element:<TrainerLayout />
+          path: "trainer/details/:id",
+          element: <TrainerLayout />,
         },
         {
           path:"trainer/payments",
@@ -95,31 +93,31 @@ function App() {
         //attendance routes
         {
           path: "attendance",
-          element: <Attendance/>,
+          element: <Attendance />,
         },
         {
-          path:"trainerattendance",
-          element:<TrainerAttendance />
+          path: "trainerattendance",
+          element: <TrainerAttendance />,
         },
 
         //inventory routes
         {
           path: "inventory",
-          element: <Inventory/>,
+          element: <Inventory />,
         },
         {
-          path:"inventory/addinventory",
-          element:<AddInventory/>
+          path: "inventory/addinventory",
+          element: <AddInventory />,
         },
         {
-          path:"inventory/update/:id",
-          element:<UpdateInventory />
+          path: "inventory/update/:id",
+          element: <UpdateInventory />,
         },
 
         //equipment routes
         {
           path: "equipment",
-          element: <Equipment/>,
+          element: <Equipment />,
         },
         // {
         //   path: "finance",
