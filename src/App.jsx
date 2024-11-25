@@ -19,7 +19,10 @@ import Equipment from "./pages/Equipment";
 import TrainerAttendance from "./pages/TrainerAttendance";
 import MemberLayout from "./components/Members/MemberLayout";
 import TrainerLayout from "./components/Trainers/TrainerLayout";
-
+import MemberPayments from "./pages/MemberPayments";
+import TrainerPayments from "./pages/TrainerPayments";
+import MemberPaymentUpdate from "./components/Members/MemberPaymentUpdate";
+import TrainerPaymentUpdate from "./components/Trainers/TrainerPaymentUpdate";
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,14 +31,14 @@ function App() {
     },
     {
       path: "/admin",
-      element: (
-        <ProtectedRoute element={<DashboardLayout />} />
-      ),
+      element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
         {
           path: "dashboard",
           element: <div className="pink">Dashboard Content</div>,
         },
+
+        //routes for members
         {
           path: "members",
           element: <Member />,
@@ -46,12 +49,22 @@ function App() {
         },
         {
           path: "member/update/:id",
-          element: <UpdateMember/>,
+          element: <UpdateMember />,
         },
         {
-          path:"member/details/:id",
-          element:<MemberLayout />
+          path: "member/details/:id",
+          element: <MemberLayout />,
         },
+        {
+          path:"member/payments",
+          element:<MemberPayments />
+        },
+        {
+          path:"member/paymentUpdate",
+          element:<MemberPaymentUpdate />
+        },
+
+        //routes for trainers
         {
           path: "trainers",
           element: <Trainer />,
@@ -65,37 +78,51 @@ function App() {
           element: <UpdateTrainer />,
         },
         {
-          path:"trainer/details/:id",
-          element:<TrainerLayout />
+          path: "trainer/details/:id",
+          element: <TrainerLayout />,
         },
+        {
+          path:"trainer/payments",
+          element:<TrainerPayments/>
+        },
+        {  
+          path:"trainer/trainer-payment-Update",
+          element:<TrainerPaymentUpdate />
+        },
+
+        //attendance routes
         {
           path: "attendance",
-          element: <Attendance/>,
+          element: <Attendance />,
         },
         {
-          path:"trainerattendance",
-          element:<TrainerAttendance />
+          path: "trainerattendance",
+          element: <TrainerAttendance />,
         },
+
+        //inventory routes
         {
           path: "inventory",
-          element: <Inventory/>,
+          element: <Inventory />,
         },
         {
-          path:"inventory/addinventory",
-          element:<AddInventory/>
+          path: "inventory/addinventory",
+          element: <AddInventory />,
         },
         {
-          path:"inventory/update/:id",
-          element:<UpdateInventory />
+          path: "inventory/update/:id",
+          element: <UpdateInventory />,
         },
+
+        //equipment routes
         {
           path: "equipment",
           element: <Equipment/>,
         },
-        {
-          path: "finance",
-          element: <div>helladsadao</div>,
-        },
+        // {
+        //   path: "finance",
+        //   element: <div>helladsadao</div>,
+        // },
         {
           path: "settings",
           element: <div>hellocdafda</div>,
