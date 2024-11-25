@@ -260,8 +260,14 @@ function SideBar({ isOpen, setIsOpen }) {
           />
           <SideBarLink
             svg={paymentSVG}
-            text="Finance"
-            to="/admin/finance"
+            text="Member Finance"
+            to="/admin/member/payments"
+            isOpen={isOpen}
+          />
+          <SideBarLink
+            svg={paymentSVG}
+            text="Trainer Finance"
+            to="/admin/trainer/payments"
             isOpen={isOpen}
           />
           <SideBarLink
