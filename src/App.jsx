@@ -28,9 +28,7 @@ function App() {
     },
     {
       path: "/admin",
-      element: (
-        <ProtectedRoute element={<DashboardLayout />} />
-      ),
+      element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
         {
           path: "dashboard",
@@ -46,11 +44,11 @@ function App() {
         },
         {
           path: "member/update/:id",
-          element: <UpdateMember/>,
+          element: <UpdateMember />,
         },
         {
-          path:"member/details/:id",
-          element:<MemberLayout />
+          path: "member/details/:id",
+          element: <MemberLayout />,
         },
         {
           path: "trainers",
@@ -65,32 +63,32 @@ function App() {
           element: <UpdateTrainer />,
         },
         {
-          path:"trainer/details/:id",
-          element:<TrainerLayout />
+          path: "trainer/details/:id",
+          element: <TrainerLayout />,
         },
         {
           path: "attendance",
-          element: <Attendance/>,
+          element: <Attendance />,
         },
         {
-          path:"trainerattendance",
-          element:<TrainerAttendance />
+          path: "trainerattendance",
+          element: <TrainerAttendance />,
         },
         {
           path: "inventory",
-          element: <Inventory/>,
+          element: <Inventory />,
         },
         {
-          path:"inventory/addinventory",
-          element:<AddInventory/>
+          path: "inventory/addinventory",
+          element: <AddInventory />,
         },
         {
-          path:"inventory/update/:id",
-          element:<UpdateInventory />
+          path: "inventory/update/:id",
+          element: <UpdateInventory />,
         },
         {
           path: "equipment",
-          element: <Equipment/>,
+          element: <Equipment />,
         },
         {
           path: "finance",
