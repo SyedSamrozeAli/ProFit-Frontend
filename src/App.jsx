@@ -117,7 +117,7 @@ function App() {
         //equipment routes
         {
           path: "equipment",
-          element: <Equipment />,
+          element: <Equipment/>,
         },
         // {
         //   path: "finance",
