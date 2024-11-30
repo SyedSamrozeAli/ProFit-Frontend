@@ -23,6 +23,9 @@ import MemberPayments from "./pages/MemberPayments";
 import TrainerPayments from "./pages/TrainerPayments";
 import MemberPaymentUpdate from "./components/Members/MemberPaymentUpdate";
 import TrainerPaymentUpdate from "./components/Trainers/TrainerPaymentUpdate";
+import Dashboard from "./pages/DashBoardPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 function App() {
   const router = createBrowserRouter([
     {
@@ -30,12 +33,20 @@ function App() {
       element: <LoginPage />,
     },
     {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPasswordPage />,
+    },
+    {
       path: "/admin",
       element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
         {
           path: "dashboard",
-          element: <div className="pink">Dashboard Content</div>,
+          element: <Dashboard />,
         },
 
         //routes for members
@@ -56,12 +67,12 @@ function App() {
           element: <MemberLayout />,
         },
         {
-          path:"member/payments",
-          element:<MemberPayments />
+          path: "member/payments",
+          element: <MemberPayments />,
         },
         {
-          path:"member/paymentUpdate",
-          element:<MemberPaymentUpdate />
+          path: "member/paymentUpdate",
+          element: <MemberPaymentUpdate />,
         },
 
         //routes for trainers
@@ -82,12 +93,12 @@ function App() {
           element: <TrainerLayout />,
         },
         {
-          path:"trainer/payments",
-          element:<TrainerPayments/>
+          path: "trainer/payments",
+          element: <TrainerPayments />,
         },
-        {  
-          path:"trainer/trainer-payment-Update",
-          element:<TrainerPaymentUpdate />
+        {
+          path: "trainer/trainer-payment-Update",
+          element: <TrainerPaymentUpdate />,
         },
 
         //attendance routes
@@ -117,7 +128,7 @@ function App() {
         //equipment routes
         {
           path: "equipment",
-          element: <Equipment/>,
+          element: <Equipment />,
         },
         // {
         //   path: "finance",
