@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../components/NavBar";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ function Attendance() {
   const [attendanceData, setAttendanceData] = useState([]);
   const [updatedMembers, setUpdatedMembers] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
-
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
   const handleDateChange = (e) => {
@@ -18,26 +18,26 @@ function Attendance() {
   // Function to handle field updates and track updated members
   const handleAttendanceChange = (member_id, field, value) => {
     let formattedValue = value;
-  
+
     if (field === "check_in_time" || field === "check_out_time") {
       const timeParts = value.split(":");
       if (timeParts.length === 2) {
         formattedValue = `${timeParts[0]}:${timeParts[1]}:00`; // Ensure H:i:s format
       }
     }
-  
+
     setAttendanceData((prevData) =>
       prevData.map((attendance) => {
         if (attendance.member_id === member_id) {
           const updatedAttendance = { ...attendance, [field]: formattedValue };
-  
+
           // Handle status-specific changes
           if (field === "attendance_status") {
             if (value === "Absent") {
               updatedAttendance.check_in_time = null;
               updatedAttendance.check_out_time = null;
             }
-  
+
             // Remove member from updates if status is null
             if (value === null) {
               setUpdatedMembers((prevUpdates) => {
@@ -48,48 +48,46 @@ function Attendance() {
               return updatedAttendance; // Exit early without tracking
             }
           }
-  
+
           // Track updates for non-null status
           setUpdatedMembers((prevUpdates) => ({
             ...prevUpdates,
             [member_id]: updatedAttendance,
           }));
-  
+
           return updatedAttendance;
         }
         return attendance;
       })
     );
   };
-  
-  
 
   // Function to handle saving updated attendance
   const handleSave = () => {
     // Filter out members with `attendance_status` set to null
-    const updatedData = Object.values(updatedMembers).filter(
-      ({ attendance_status }) => attendance_status !== null
-    ).map(
-      ({ member_id, check_in_time, check_out_time, attendance_status }) => ({
-        member_id,
-        check_in_time,
-        check_out_time,
-        attendance_status,
-      })
-    );
-  
+    const updatedData = Object.values(updatedMembers)
+      .filter(({ attendance_status }) => attendance_status !== null)
+      .map(
+        ({ member_id, check_in_time, check_out_time, attendance_status }) => ({
+          member_id,
+          check_in_time,
+          check_out_time,
+          attendance_status,
+        })
+      );
+
     if (updatedData.length === 0) {
       toast.error("No valid changes to save.");
       return;
     }
-  
+
     const dataToSend = {
       attendance_date: selectedDate,
       attendance: updatedData,
     };
-  
+
     console.log("Data to send:", dataToSend);
-  
+
     axios
       .post("http://profit-backend.test/api/member-attendance", dataToSend, {
         headers: { Authorization: `Bearer ${token}` },
@@ -100,23 +98,22 @@ function Attendance() {
         setUpdatedMembers({}); // Reset updates after successful save
       })
       .catch((error) => {
-        if('The attendance.0.check_out_time field must be a date after attendance.0.check_in_time.'){
-            toast.error("Checkout Date must be after the Check In time");
-        }
-        else{
-            toast.error("Failed to save attendance!");
+        if (
+          "The attendance.0.check_out_time field must be a date after attendance.0.check_in_time."
+        ) {
+          toast.error("Checkout Date must be after the Check In time");
+        } else {
+          toast.error("Failed to save attendance!");
         }
       });
   };
-  
-  
 
   useEffect(() => {
     if (!selectedDate) {
       toast.error("Please choose a date!");
       return;
     }
-
+    setLoading(true);
     axios
       .get(
         `http://profit-backend.test/api/member-attendance?attendance_date=${selectedDate}`,
@@ -136,13 +133,16 @@ function Attendance() {
       })
       .catch((error) => {
         console.error("Error fetching attendance data:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [selectedDate]);
 
   return (
     <>
       <NavBar title="Member Attendance" />
-      <div className="w-full h-screen bg-white">
+      <div className="w-full bg-white">
         <div className="mx-6 my-4">
           <div className="flex justify-between items-center mb-5">
             <input
@@ -158,9 +158,11 @@ function Attendance() {
               Save
             </button>
           </div>
+
           <AddAttendance
             attendanceData={attendanceData}
             handleAttendanceChange={handleAttendanceChange}
+            loading={loading}
           />
         </div>
       </div>
