@@ -44,16 +44,32 @@ function Login() {
           setEmail("");
           setPassword("");
           const successToast = toast.success("Logged In Successfully");
-          toast.update(successToast, { autoClose: 1500 });
+          toast.update(successToast, { autoClose: 1000 });
           navigate("/admin/dashboard");
         }
       })
       .catch((error) => {
         console.log("error", error.response);
-        toast.error(
-          error.response?.data?.message ||
-            "Invalid Credentials, Please Try Again Later!"
-        );
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          const emailError = error.response.data.message.email
+            ? error.response.data.message.email[0]
+            : null;
+          const passError = error.response.data.message
+            ? error.response.data.message[0]
+            : null;
+
+          const errorMsg =
+            emailError ||
+            passError ||
+            "Invalid Credentials, Please Enter Correct Details";
+          toast.error(errorMsg);
+        } else {
+          toast.error("Invalid Response, Please Try Again Later!");
+        }
       })
       .finally(() => {
         setIsLoading(false);
