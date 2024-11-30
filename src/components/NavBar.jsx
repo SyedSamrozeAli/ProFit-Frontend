@@ -4,7 +4,7 @@ import "../styles/dashboard.css";
 
 function NavBar({ title }) {
   return (
-    <div className="bg-gray-50 h-12 flex-1 py-2 px-4 sm:px-12 dashboard-navbar">
+    <div className="bg-gray-50 h-12 flex-1 py-2 px-4 sm:px-12 dashboard-navbar my-content">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-lg sm:text-xl font-semibold">{title}</p>
