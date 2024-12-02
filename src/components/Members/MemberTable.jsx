@@ -24,7 +24,7 @@ function MemberTable({ memberData = [], handleDeleteField }) {
     membership_Type: member.membership_type,
     start_date: member.start_date?.split(" ")[0] || "",
     trainer_name: member.trainer_name,
-    status: member.member_statuss,
+    status: member.member_status,
     action: (
       <div className="flex space-x-2">
         <button
