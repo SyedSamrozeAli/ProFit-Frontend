@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const FinanceReport = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = "your-auth-token"; // Replace with your actual token retrieval method
+  const token = localStorage.getItem("token"); // Replace with your actual token retrieval method
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +47,11 @@ const FinanceReport = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      toast.success("Report generated succesfully");
     } catch (err) {
       console.error(err);
+      toast.error("An error occured while generating report.");
       setError(
         "An error occurred while generating the report. Please try again."
       );
@@ -59,31 +62,46 @@ const FinanceReport = () => {
 
   return (
     <div>
-      <h1>Finance Report Generation</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="flex gap-4 flex-col w-72">
         <div>
-          <label htmlFor="start-date">Start Date:</label>
+          <label
+            htmlFor="start-date"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Start Date:
+          </label>
           <input
             type="date"
             id="start-date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             required
+            className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
 
         <div>
-          <label htmlFor="end-date">End Date:</label>
+          <label
+            htmlFor="end-date"
+            className="block text-sm font-medium text-gray-600"
+          >
+            End Date:
+          </label>
           <input
             type="date"
             id="end-date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             required
+            className="mt-1 p-2 w-full border rounded-md"
           />
         </div>
 
-        <button type="submit" disabled={isLoading}>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-red-600 hover:bg-red-700 text-md text-white px-4 py-2  rounded-lg cursor-pointer transition-colors duration-300 flex items-center justify-center"
+        >
           {isLoading ? "Generating..." : "Generate Report"}
         </button>
       </form>
