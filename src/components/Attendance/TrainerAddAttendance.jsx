@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 function TrainerAddAttendance({
   attendanceData = {},
   handleAttendanceChange,
@@ -9,12 +12,11 @@ function TrainerAddAttendance({
   const [rowsPerPage] = useState(20); // Adjust rows per page as needed
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // Handle pagination
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = attendanceData.slice(indexOfFirstRow, indexOfLastRow);
 
-  // Handle changing pageaa
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // Filter rows by status
@@ -23,22 +25,52 @@ function TrainerAddAttendance({
       ? currentRows
       : currentRows.filter((row) => row.attendance_status === filterStatus);
 
+  // PDF Export Function
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Trainer Attendance Report", 14, 10);
+
+    const tableData = attendanceData.map((attendance) => [
+      attendance.trainer_name,
+      attendance.attendance_status || "N/A",
+      attendance.check_in_time || "N/A",
+      attendance.check_out_time || "N/A",
+    ]);
+
+    doc.autoTable({
+      head: [
+        ["Trainer Name",  "Status", "Check-In Time", "Check-Out Time"],
+      ],
+      body: tableData,
+    });
+
+    doc.save("trainer-attendance.pdf");
+  };
+
   return (
     <div className="overflow-x-auto">
-      <div className="mb-4">
-        <label htmlFor="filter" className="mr-2">
-          Filter by Status:
-        </label>
-        <select
-          id="filter"
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-          className="border rounded-md px-2 py-1"
+      <div className="mb-4 flex justify-between">
+        <div>
+          <label htmlFor="filter" className="mr-2">
+            Filter by Status:
+          </label>
+          <select
+            id="filter"
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="border rounded-md px-2 py-1"
+          >
+            <option value="All">All</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+          </select>
+        </div>
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-md"
         >
-          <option value="All">All</option>
-          <option value="Present">Present</option>
-          <option value="Absent">Absent</option>
-        </select>
+          Export to PDF
+        </button>
       </div>
       {loading ? (
         <div className="h-full w-full inset-0 flex items-center justify-center">

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { MdDeleteOutline, MdSecurityUpdate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function MemberTable({ memberData = [], handleDeleteField }) {
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ function MemberTable({ memberData = [], handleDeleteField }) {
     membership_Type: member.membership_type,
     start_date: member.start_date?.split(" ")[0] || "",
     trainer_name: member.trainer_name,
-    status: "Active",
+    status: member.member_statuss,
     action: (
       <div className="flex space-x-2">
         <button
@@ -133,17 +135,44 @@ function MemberTable({ memberData = [], handleDeleteField }) {
     navigate(`/admin/member/details/${row.member_id}`);
   };
 
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Member List", 14, 10);
+
+    const tableData = filteredData.map((member) => [
+      member.member_id,
+      member.member_name,
+      member.membership_type,
+      member.start_date?.split(" ")[0] || "",
+      member.trainer_name || "Not Available",
+      "Active",
+    ]);
+
+    doc.autoTable({
+      head: [["Member ID", "Name", "Membership Type", "Admission Date", "Trainer Name", "Status"]],
+      body: tableData,
+    });
+
+    doc.save("member-list.pdf");
+  };
+
   return (
     <div className="p-4 border border-gray-300 rounded-lg shadow-sm overflow-x-auto">
-      {/* Search bar */}
-      <div className="mb-4">
+      {/* Search bar and Export Button */}
+      <div className="flex justify-between items-center mb-4">
         <input
           type="text"
-          className="border px-4 py-2 w-full rounded-lg"
+          className="border px-4 py-2 w-1/2 md:w-1/3 rounded-lg mr-2"
           placeholder="Search Members By Name"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          Export to PDF
+        </button>
       </div>
 
       {/* Data Table */}

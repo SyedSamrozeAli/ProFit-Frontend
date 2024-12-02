@@ -1,3 +1,22 @@
+/* Default light mode styles */
+body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .bg-gray-50 {
+  background-color: #1f1f1f; /* Change background for dark mode */
+}
+
+/* Adjust other elements as needed for dark mode */
+
+
 .dashboard-layout {
   display: grid;
   grid-template-columns: auto 1fr; /* Adjusts dynamically based on sidebar */
