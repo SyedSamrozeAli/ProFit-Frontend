@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { MdDeleteOutline } from "react-icons/md";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function EquipmentTable({ equipmentData = [], handleDeleteField }) {
   const [search, setSearch] = useState("");
@@ -30,7 +32,7 @@ function EquipmentTable({ equipmentData = [], handleDeleteField }) {
     quantity: equipment.quantity,
     price: equipment.price,
     description: equipment.description,
-    status: equipment.status,
+    status: equipment.status || "Out of Stock",
     action: (
       <div className="flex space-x-2">
         <button
@@ -43,7 +45,6 @@ function EquipmentTable({ equipmentData = [], handleDeleteField }) {
     ),
   }));
 
-  // Define columns with even spacing
   const columns = [
     {
       name: "Equipment ID",
@@ -99,11 +100,10 @@ function EquipmentTable({ equipmentData = [], handleDeleteField }) {
     },
   ];
 
-  // Custom styles for even column spacing
   const customStyles = {
     rows: {
       style: {
-        padding: "8px", // Row padding
+        padding: "8px",
         borderBottom: "1px solid #E5E7EB",
       },
     },
@@ -111,17 +111,49 @@ function EquipmentTable({ equipmentData = [], handleDeleteField }) {
       style: {
         fontWeight: "bold",
         textAlign: "center",
-        padding: "8px", // Header cell padding
+        padding: "8px",
         borderBottom: "2px solid #E5E7EB",
         backgroundColor: "#F3F4F6",
       },
     },
     cells: {
       style: {
-        padding: "8px", // Regular cell padding
-        textAlign: "center", // Center-align text
+        padding: "8px",
+        textAlign: "center",
       },
     },
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Equipment List", 14, 10);
+
+    const tableData = filteredData.map((equipment) => [
+      equipment.equipment_id,
+      equipment.equipment_name,
+      equipment.category,
+      equipment.quantity,
+      equipment.price,
+      equipment.description,
+      equipment.status || "Out of Stock",
+    ]);
+
+    doc.autoTable({
+      head: [
+        [
+          "Equipment ID",
+          "Name",
+          "Category",
+          "Quantity",
+          "Price",
+          "Description",
+          "Status",
+        ],
+      ],
+      body: tableData,
+    });
+
+    doc.save("equipment-list.pdf");
   };
 
   return (
@@ -134,6 +166,12 @@ function EquipmentTable({ equipmentData = [], handleDeleteField }) {
           placeholder="Search by Equipment Name or Price"
           className="border border-gray-300 rounded-lg px-4 py-2 w-1/3"
         />
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          Export PDF
+        </button>
       </div>
       {data.length > 0 ? (
         <DataTable

@@ -6,7 +6,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "react-circular-progressbar/dist/styles.css";
-
+import { Loader2 } from "lucide-react";
 function DisplayMember() {
   const [memberData, setMemberData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,18 +145,9 @@ function DisplayMember() {
       {/* <NavBar title="DisplayTrainer" /> */}
       {loading ? (
         // Loading state with progress bar
-        <div className="flex items-center justify-center h-screen">
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbar
-              value={loadingProgress}
-              text={`${loadingProgress}%`}
-              styles={buildStyles({
-                textColor: "#000", // Color of the percentage text
-                pathColor: "#ff0000", // Set the path color to red (#ff0000)
-                trailColor: "#ffffff", // Background color of the circular trail
-              })}
-            />
-          </div>
+
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Loader2 className="h-10 w-10 text-gray-400 animate-spin" />
         </div>
       ) : (
         // If not loading and no error occurred, render data or show "No trainer found"

@@ -23,6 +23,15 @@ import MemberPayments from "./pages/MemberPayments";
 import TrainerPayments from "./pages/TrainerPayments";
 import MemberPaymentUpdate from "./components/Members/MemberPaymentUpdate";
 import TrainerPaymentUpdate from "./components/Trainers/TrainerPaymentUpdate";
+import InventoryPayments from "./pages/InventoryPayments";
+import InventoryPaymentUpdate from "./components/Inventory/InventoryPaymentUpdate";
+import OtherExpense from "./pages/OtherExpense";
+import AddExpense from "./components/Expense/AddExpense";
+import UpdateExpense from "./components/Expense/UpdatedExpense";
+import Dashboard from "./pages/DashBoardPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import FinanceReportGenerate from "./pages/FinanceReportGenerate";
 function App() {
   const router = createBrowserRouter([
     {
@@ -30,12 +39,20 @@ function App() {
       element: <LoginPage />,
     },
     {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPasswordPage />,
+    },
+    {
       path: "/admin",
       element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
         {
           path: "dashboard",
-          element: <div className="pink">Dashboard Content</div>,
+          element: <Dashboard />,
         },
 
         //routes for members
@@ -56,12 +73,12 @@ function App() {
           element: <MemberLayout />,
         },
         {
-          path:"member/payments",
-          element:<MemberPayments />
+          path: "member/payments",
+          element: <MemberPayments />,
         },
         {
-          path:"member/paymentUpdate",
-          element:<MemberPaymentUpdate />
+          path: "member/paymentUpdate",
+          element: <MemberPaymentUpdate />,
         },
 
         //routes for trainers
@@ -82,12 +99,12 @@ function App() {
           element: <TrainerLayout />,
         },
         {
-          path:"trainer/payments",
-          element:<TrainerPayments/>
+          path: "trainer/payments",
+          element: <TrainerPayments />,
         },
-        {  
-          path:"trainer/trainer-payment-Update",
-          element:<TrainerPaymentUpdate />
+        {
+          path: "trainer/trainer-payment-Update",
+          element: <TrainerPaymentUpdate />,
         },
 
         //attendance routes
@@ -113,19 +130,35 @@ function App() {
           path: "inventory/update/:id",
           element: <UpdateInventory />,
         },
-
+        {
+          path: "inventory/payments",
+          element: <InventoryPayments />
+        },
+        {  
+          path:"inventory/inventory-payment-Update",
+          element: <InventoryPaymentUpdate />
+        },
+        //other expense routes
+        {
+          path:"expense/payments",
+          element:<OtherExpense />
+        },
+        {
+          path:"expense/add-expense",
+          element:<AddExpense />
+        },
+        {
+          path:"other/expense/details/:id",
+          element:<UpdateExpense/>
+        },
+        {
+          path:"/admin/finance-report-generate",
+          element:<FinanceReportGenerate />
+        },
         //equipment routes
         {
           path: "equipment",
           element: <Equipment/>,
-        },
-        // {
-        //   path: "finance",
-        //   element: <div>helladsadao</div>,
-        // },
-        {
-          path: "settings",
-          element: <div>hellocdafda</div>,
         },
       ],
     },

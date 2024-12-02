@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import NavBar from "../NavBar";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
@@ -130,18 +130,8 @@ function MemberLayout() {
     <>
       <NavBar title="Manage Members" />
       {loading ? (
-        <div className="flex items-center justify-center h-screen">
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbar
-              value={loadingProgress}
-              text={`${loadingProgress}%`}
-              styles={buildStyles({
-                textColor: "#000",
-                pathColor: "#ff0000",
-                trailColor: "#ffffff",
-              })}
-            />
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Loader2 className="h-10 w-10 text-gray-400 animate-spin" />
         </div>
       ) : error ? (
         <div className="flex items-center justify-center h-screen">

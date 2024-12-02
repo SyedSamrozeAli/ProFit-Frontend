@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
-
-function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText}) {
-  const token = localStorage.getItem('token');  
+function UpdateInventoryForm({
+  msg,
+  requestType,
+  URL,
+  initialInventory,
+  btnText,
+}) {
+  const token = localStorage.getItem("token");
 
   //this is the state for the updated data.
-   const [updatedData , setUpdatedData] = useState({});
-   const [inventory , setInventory] = useState(initialInventory);
+  const [updatedData, setUpdatedData] = useState({});
+  const [inventory, setInventory] = useState(initialInventory);
 
-   useEffect(() => {
+  useEffect(() => {
     setInventory(initialInventory);
   }, [initialInventory]);
-
 
   // Handle form submission
   const handleFormSubmit = (e) => {
@@ -24,8 +28,8 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
       url: URL,
       data: updatedData,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => {
         console.log(response);
@@ -38,13 +42,12 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
         console.log(error);
         if (error.response.data && error.response.data.errors) {
           const errorList = error.response.data.errors;
-          errorList.forEach(msg => {
+          errorList.forEach((msg) => {
             console.log("Error", msg);
             toast.error(msg);
           });
         }
       });
-
   };
 
   const handleInputChange = (e) => {
@@ -68,17 +71,11 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
       transition={{ duration: 0.5 }}
       className="p-8 rounded-lg shadow-lg"
     >
-      <form
-        onSubmit={handleFormSubmit}
-        className="space-y-6"
-      >
+      <form onSubmit={handleFormSubmit} className="space-y-6">
         {/* Form Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Equipment Name */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Equipment Name
             </label>
@@ -93,13 +90,8 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
           </motion.div>
 
           {/* Category */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
-            <label className="text-sm font-semibold text-black">
-              Category
-            </label>
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
+            <label className="text-sm font-semibold text-black">Category</label>
             <select
               name="category"
               value={inventory.category || ""}
@@ -115,10 +107,7 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
           </motion.div>
 
           {/* Cost Per Unit */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Cost Per Unit
             </label>
@@ -133,13 +122,8 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
           </motion.div>
 
           {/* Quantity */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
-            <label className="text-sm font-semibold text-black">
-              Quantity
-            </label>
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
+            <label className="text-sm font-semibold text-black">Quantity</label>
             <input
               type="number"
               name="quantity"
@@ -151,10 +135,7 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
           </motion.div>
 
           {/* Maintenance Date */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Purchase Date
             </label>
@@ -167,10 +148,7 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
             />
           </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Maintenance Date
             </label>
@@ -183,10 +161,7 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
             />
           </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Warranty (in months)
             </label>
@@ -201,10 +176,7 @@ function UpdateInventoryForm({ msg , requestType, URL, initialInventory ,btnText
           </motion.div>
 
           {/* Supplier Name */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="space-y-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="space-y-2">
             <label className="text-sm font-semibold text-black">
               Supplier Name
             </label>

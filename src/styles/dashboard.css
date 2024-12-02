@@ -1,15 +1,37 @@
+/* Default light mode styles */
+body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .bg-gray-50 {
+  background-color: #1f1f1f; /* Change background for dark mode */
+}
+
+/* Adjust other elements as needed for dark mode */
+
+
 .dashboard-layout {
   display: grid;
   grid-template-columns: auto 1fr; /* Adjusts dynamically based on sidebar */
-  grid-template-rows: 60px calc(100vh - 60px);
+  grid-template-rows: auto;
   transition: grid-template-columns 0.3s ease; /* Smooth transition */
 }
 
 .sidebar {
   grid-area: 1/1/3/2;
-  height: max-content; /* Ensure it takes at least full screen height */
+  height: 100%; /* Ensure it takes at least full screen height */
 }
 
+.my-content{
+  display:block;
+}
 /* Full layout when sidebar is open */
 .dashboard-layout.sidebar-open {
   grid-template-columns: 220px 1fr;
@@ -29,10 +51,15 @@
 @media (min-width: 640px) {
   .dashboard-layout.sidebar-open {
     grid-template-columns: 220px 1fr; /* Large sidebar */
+    grid-template-rows: auto
   }
 
   .dashboard-layout.sidebar-closed {
     grid-template-columns: 60px 1fr; /* Small sidebar */
+  }
+
+  .my-content{
+    display:block;
   }
 }
 
@@ -41,6 +68,9 @@
     grid-template-columns: 1fr; /* Sidebar overlaps content on mobile */
   }
 
+  .my-content.sidebar-open{
+    display:none;
+  }
   .sidebar {
     position: absolute; /* Overlap content on mobile */
     z-index: 50;
