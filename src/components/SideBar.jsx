@@ -278,7 +278,9 @@ function SideBar({ isOpen, setIsOpen }) {
             >
               <div className="flex items-center ">
                 {attendanceSVG}
-                {isOpen && <span className="ml-2">Attendance</span>}
+                {isOpen && (
+                  <span className="ml-2 font-myFont text-sm">Attendance</span>
+                )}
               </div>
               {isOpen && (
                 <span>
@@ -325,7 +327,7 @@ function SideBar({ isOpen, setIsOpen }) {
             >
               <div className="flex items-center ">
                 {paymentSVG}
-                {isOpen && <span className="ml-2">Manage Finance</span>}
+                {isOpen && <span className="ml-2 text-sm">Manage Finance</span>}
               </div>
               {isOpen && (
                 <span>
@@ -360,7 +362,7 @@ function SideBar({ isOpen, setIsOpen }) {
                 />
                 <SideBarLink
                   className="mt-4"
-                  text="Equipment Finance"
+                  text="Generate Report"
                   to="/admin/finance-report-generate"
                   isOpen={isOpen}
                 />
