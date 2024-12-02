@@ -95,7 +95,7 @@ export default function Dashboard() {
           },
         });
       } catch (error) {
-        toast.error("Failed to load data. Please try again.");
+        toast.error("error in dahboard");
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);

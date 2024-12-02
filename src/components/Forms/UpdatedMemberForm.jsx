@@ -8,6 +8,29 @@ function UpdatedMemberForm({ msg, requestType, URL, initialMember, btnText }) {
   // This is the state for the updated data.
   const [updatedData, setUpdatedData] = useState({});
   const [member, setMember] = useState(initialMember);
+  const [trainers, setTrainers] = useState([]); 
+
+  useEffect(() => {
+    const fetchTrainers = async () => {
+      try {
+        const response = await axios.get("http://profit-backend.test/api/trainer", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data && Array.isArray(response.data.data)) {
+          setTrainers(response.data.data); 
+        } else {
+          console.error("Invalid trainers data:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching trainers:", error);
+        toast.error("Failed to fetch trainers");
+      }
+    };
+
+    fetchTrainers();
+  }, [token]);
 
   useEffect(() => {
     // Set initial values on mount
@@ -23,11 +46,11 @@ function UpdatedMemberForm({ msg, requestType, URL, initialMember, btnText }) {
       ...updatedData,
       weight: member.weight || updatedData.weight,
       height: member.height || updatedData.height,
-      membership_duration:
-        updatedData.membership_duration || member.membership_duration,
+      membership_duration:updatedData.membership_duration || member.membership_duration,
       membership_type: updatedData.membership_type || member.membership_type,
       trainer_id: updatedData.trainer_id || member.trainer_id,
       profile_image: updatedData.profile_image || member.profile_image,
+      start_date: updatedData.start_date || member.start_date,
     };
 
     axios({
@@ -46,7 +69,8 @@ function UpdatedMemberForm({ msg, requestType, URL, initialMember, btnText }) {
         });
       })
       .catch((error) => {
-        if (error.response.data.message) {
+        console.log("error ha bhai",error);
+        if (error.response?.data?.message) {
           for (let field in error.response.data.message) {
             const errorMessages = error.response.data.message[field];
             console.log(errorMessages);
@@ -259,19 +283,20 @@ function UpdatedMemberForm({ msg, requestType, URL, initialMember, btnText }) {
               <label className="block text-sm font-medium text-gray-600">
                 Trainer (if any)
               </label>
-              <input
-                type="number"
-                name="trainer_id"
-                placeholder="Enter Trainer ID"
-                value={member.trainer_id || ""}
-                onChange={handleInputChange}
-                disabled={member.membership_type === "Standard"}
-                className={`mt-1 p-2 w-full border rounded-md ${
-                  member.membership_type === "Standard"
-                    ? "bg-gray-100 cursor-not-allowed"
-                    : ""
-                }`}
-              />
+              <select
+              name="trainer_id"
+              value={member.trainer_id || ""}
+              onChange={handleInputChange}
+              disabled={member.membership_type === "Standard"}
+              className="mt-1 p-2 w-full border rounded-md"
+              >
+              <option value="">Select Trainer</option>
+              {trainers.map((trainer) => (
+                <option key={trainer.trainer_id} value={trainer.trainer_id}>
+                  {trainer.trainer_id}
+                </option>
+              ))}
+            </select>
             </div>
 
             <div>

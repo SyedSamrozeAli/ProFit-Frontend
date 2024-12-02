@@ -32,14 +32,8 @@ function TrainerForm({
         });
       })
       .catch((error) => {
-        console.log(error);
-        if (error.response.data && error.response.data.errors) {
-          const errorList = error.response.data.errors;
-          errorList.forEach((msg) => {
-            console.log("Error", msg);
-            toast.error(msg);
-          });
-        }
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
 

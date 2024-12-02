@@ -31,6 +31,7 @@ import UpdateExpense from "./components/Expense/UpdatedExpense";
 import Dashboard from "./pages/DashBoardPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import FinanceReportGenerate from "./pages/FinanceReportGenerate";
 function App() {
   const router = createBrowserRouter([
     {
@@ -149,6 +150,10 @@ function App() {
         {
           path:"other/expense/details/:id",
           element:<UpdateExpense/>
+        },
+        {
+          path:"/admin/finance-report-generate",
+          element:<FinanceReportGenerate />
         },
         //equipment routes
         {

@@ -358,6 +358,12 @@ function SideBar({ isOpen, setIsOpen }) {
                   to="/admin/expense/payments"
                   isOpen={isOpen}
                 />
+                <SideBarLink
+                  className="mt-4"
+                  text="Equipment Finance"
+                  to="/admin/finance-report-generate"
+                  isOpen={isOpen}
+                />
               </div>
             )}
           </div>

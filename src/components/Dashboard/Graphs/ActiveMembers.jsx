@@ -41,7 +41,7 @@ export default function ActiveMembers() {
           toast.error("Failed to retrieve data.");
         }
       } catch (error) {
-        toast.error("Error loading data. Please try again.");
+        toast.error("active member ma error");
         console.error("Fetch error:", error);
       } finally {
         setLoading(false);
