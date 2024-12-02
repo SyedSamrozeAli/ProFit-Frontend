@@ -46,7 +46,7 @@ export default function ExpenseDistribution() {
           toast.error("Failed to retrieve data.");
         }
       } catch (error) {
-        toast.error("Error loading data. Please try again.");
+        toast.error("Expense distribution ma error.");
         console.error("Fetch error:", error);
       } finally {
         setLoading(false);
