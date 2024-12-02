@@ -36,7 +36,7 @@ function Login() {
                         autoClose: 1500,
                     });
 
-                    navigate("/admin"); // Redirect to dashboard
+                    navigate("/admin/dashboard"); // Redirect to dashboard
                 }
             })
             .catch((error) => {
