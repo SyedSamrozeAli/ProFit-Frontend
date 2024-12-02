@@ -42,7 +42,7 @@ export default function MonthlyInsights() {
           toast.error("Failed to retrieve data.");
         }
       } catch (error) {
-        toast.error("Error loading data. Please try again.");
+        toast.error("monthly insight ma error.");
         console.error("Fetch error:", error);
       } finally {
         setLoading(false);
