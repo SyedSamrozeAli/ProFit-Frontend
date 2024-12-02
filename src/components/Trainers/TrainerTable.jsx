@@ -3,9 +3,9 @@ import DataTable from "react-data-table-component";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdSecurityUpdate } from "react-icons/md";
 import StarRatings from "react-star-ratings";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function TrainerTable({ trainerData = [], handleDeleteField }) {
   const [search, setSearch] = useState("");
@@ -27,6 +27,43 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
         trainer.hire_date.includes(value)
     );
     setFilteredData(filtered);
+  };
+
+  // Export table data to PDF
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = [
+      "ID",
+      "Name",
+      "Age",
+      "Hire Date",
+      "Salary",
+      "Rating",
+      "Status",
+    ];
+    const tableRows = [];
+
+    filteredData.forEach((trainer) => {
+      const row = [
+        trainer.trainer_id,
+        trainer.trainer_name,
+        trainer.age,
+        trainer.hire_date.split(" ")[0],
+        Math.floor(trainer.salary),
+        trainer.rating,
+        "Active",
+      ];
+      tableRows.push(row);
+    });
+
+    doc.text("Trainer Data", 14, 10);
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+    });
+
+    doc.save("trainer_data.pdf");
   };
 
   // Map the filtered data
@@ -156,7 +193,6 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
   };
 
   const handleRowClick = (row) => {
-    console.log(row);
     navigate(`/admin/trainer/details/${row.ID}`);
   };
 
@@ -167,9 +203,15 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
           type="text"
           value={search}
           onChange={handleSearch}
-          placeholder="Search by Trainer Name , ID , Hire Date."
+          placeholder="Search by Trainer Name, ID, Hire Date."
           className="border border-gray-300 rounded-lg px-4 py-2 w-1/3"
         />
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          Export to PDF
+        </button>
       </div>
       {data.length > 0 ? (
         <DataTable
