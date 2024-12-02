@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
@@ -17,6 +18,31 @@ function MemberForm({
   const [selectedImage, setSelectedImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [isSubmitLoading, setSubmitLoading] = useState(false);
+  const [trainers, setTrainers] = useState([]); 
+
+  useEffect(() => {
+    const fetchTrainers = async () => {
+      try {
+        const response = await axios.get("http://profit-backend.test/api/trainer", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data && Array.isArray(response.data.data)) {
+          setTrainers(response.data.data); 
+        } else {
+          console.error("Invalid trainers data:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching trainers:", error);
+        toast.error("Failed to fetch trainers");
+      }
+    };
+
+    fetchTrainers();
+  }, [token]);
+
+
   // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -295,16 +321,20 @@ function MemberForm({
               <label className="block text-sm font-medium text-gray-600">
                 Trainer (if any)
               </label>
-              <input
-                required
-                type="number"
-                name="trainer_id"
-                placeholder="Enter Trainer ID"
-                value={member.trainer_id || " "}
-                onChange={handleInputChange}
-                disabled={member.membership_type === "Standard"}
-                className="mt-1 p-2 w-full border rounded-md"
-              />
+              <select
+              name="trainer_id"
+              value={member.trainer_id || ""}
+              onChange={handleInputChange}
+              disabled={member.membership_type === "Standard"}
+              className="mt-1 p-2 w-full border rounded-md"
+              >
+              <option value="">Select Trainer</option>
+              {trainers.map((trainer) => (
+                <option key={trainer.trainer_id} value={trainer.trainer_id}>
+                  {trainer.trainer_id}
+                </option>
+              ))}
+            </select>
             </div>
 
             <div>
