@@ -1,44 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
-function TrainerAddAttendance({ attendanceData = {}, handleAttendanceChange }) {
+function TrainerAddAttendance({ attendanceData = [], handleAttendanceChange }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(7);  // Adjust rows per page as needed
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [rowsPerPage] = useState(7); 
+  const [filterStatus, setFilterStatus] = useState("All");
 
-  // Handle pagination
+
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = attendanceData.slice(indexOfFirstRow, indexOfLastRow);
 
-  // Handle changing pageaa
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Filter rows by status
-  const filteredRows = filterStatus === 'All' 
-    ? currentRows 
-    : currentRows.filter(row => row.attendance_status === filterStatus);
+  const filteredRows =
+    filterStatus === "All"
+      ? currentRows
+      : currentRows.filter((row) => row.attendance_status === filterStatus);
+
+  // PDF Export Function
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Trainer Attendance Report", 14, 10);
+
+    const tableData = attendanceData.map((attendance) => [
+      attendance.trainer_name,
+      attendance.attendance_status || "N/A",
+      attendance.check_in_time || "N/A",
+      attendance.check_out_time || "N/A",
+    ]);
+
+    doc.autoTable({
+      head: [
+        ["Trainer Name",  "Status", "Check-In Time", "Check-Out Time"],
+      ],
+      body: tableData,
+    });
+
+    doc.save("trainer-attendance.pdf");
+  };
 
   return (
     <div className="overflow-x-auto">
-      <div className="mb-4">
-        <label htmlFor="filter" className="mr-2">Filter by Status:</label>
-        <select
-          id="filter"
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-          className="border rounded-md px-2 py-1"
+      <div className="mb-4 flex justify-between">
+        <div>
+          <label htmlFor="filter" className="mr-2">
+            Filter by Status:
+          </label>
+          <select
+            id="filter"
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="border rounded-md px-2 py-1"
+          >
+            <option value="All">All</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+          </select>
+        </div>
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-md"
         >
-          <option value="All">All</option>
-          <option value="Present">Present</option>
-          <option value="Absent">Absent</option>
-        </select>
+          Export to PDF
+        </button>
       </div>
 
       <table className="min-w-full table-auto border-collapse border border-gray-200">
         <thead className="bg-gray-200">
           <tr>
             <th className="border border-gray-300 px-4 py-2">Trainer Name</th>
-            <th className="border border-gray-300 px-4 py-2">Date</th>
             <th className="border border-gray-300 px-4 py-2">Status</th>
             <th className="border border-gray-300 px-4 py-2">Check-In</th>
             <th className="border border-gray-300 px-4 py-2">Check-Out</th>
@@ -49,21 +82,25 @@ function TrainerAddAttendance({ attendanceData = {}, handleAttendanceChange }) {
             <tr
               key={attendance.trainer_id}
               className={
-                attendance.attendance_status === 'Present'
-                  ? 'bg-green-100'
-                  : attendance.attendance_status === 'Absent'
-                  ? 'bg-red-100'
-                  : ''
+                attendance.attendance_status === "Present"
+                  ? "bg-green-100"
+                  : attendance.attendance_status === "Absent"
+                  ? "bg-red-100"
+                  : ""
               }
             >
-              <td className="border border-gray-300 px-4 py-2">{attendance.trainer_name}</td>
-              <td className="border border-gray-300 px-4 py-2">{attendance.attendance_date}</td>
-              
+              <td className="border border-gray-300 px-4 py-2">
+                {attendance.trainer_name}
+              </td>
               <td className="border border-gray-300 px-4 py-2">
                 <select
                   value={attendance.attendance_status}
                   onChange={(e) =>
-                    handleAttendanceChange(attendance.trainer_id, 'attendance_status', e.target.value)
+                    handleAttendanceChange(
+                      attendance.trainer_id,
+                      "attendance_status",
+                      e.target.value
+                    )
                   }
                   className="border rounded-md px-2 py-1"
                 >
@@ -75,10 +112,17 @@ function TrainerAddAttendance({ attendanceData = {}, handleAttendanceChange }) {
               <td className="border border-gray-300 px-4 py-2">
                 <input
                   type="time"
-                  value={attendance.check_in_time || ''}
-                  disabled={attendance.attendance_status === 'Absent' ||attendance.attendance_status === 'Null' }
+                  value={attendance.check_in_time || ""}
+                  disabled={
+                    attendance.attendance_status === "Absent" ||
+                    attendance.attendance_status === "Null"
+                  }
                   onChange={(e) =>
-                    handleAttendanceChange(attendance.trainer_id, 'check_in_time', e.target.value)
+                    handleAttendanceChange(
+                      attendance.trainer_id,
+                      "check_in_time",
+                      e.target.value
+                    )
                   }
                   className="border rounded-md px-2 py-1"
                 />
@@ -86,10 +130,17 @@ function TrainerAddAttendance({ attendanceData = {}, handleAttendanceChange }) {
               <td className="border border-gray-300 px-4 py-2">
                 <input
                   type="time"
-                  value={attendance.check_out_time || ''}
-                  disabled={attendance.attendance_status === 'Absent' ||attendance.attendance_status === 'Null' }
+                  value={attendance.check_out_time || ""}
+                  disabled={
+                    attendance.attendance_status === "Absent" ||
+                    attendance.attendance_status === "Null"
+                  }
                   onChange={(e) =>
-                    handleAttendanceChange(attendance.trainer_id, 'check_out_time', e.target.value)
+                    handleAttendanceChange(
+                      attendance.trainer_id,
+                      "check_out_time",
+                      e.target.value
+                    )
                   }
                   className="border rounded-md px-2 py-1"
                 />
