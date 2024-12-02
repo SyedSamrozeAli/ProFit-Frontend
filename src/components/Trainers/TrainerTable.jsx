@@ -74,7 +74,7 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
           Name: trainer.trainer_name,
           Age: trainer.age,
           Hire_Date: trainer.hire_date,
-          status: "Active",
+          status: trainer.status === 1 ? "Available" : "Not Available",
           Rating: (
             <StarRatings
               rating={parseFloat(trainer.rating)}
@@ -148,8 +148,8 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
       cell: (row) => (
         <span
           style={{
-            color: row.status === "Active" ? "#0D7300" : "#EB0707",
-            background: row.status === "Active" ? "#DFFFD7" : "#FFE8E8",
+            color: row.status === "Available" ? "#0D7300" : "#EB0707",
+            background: row.status === "Available" ? "#DFFFD7" : "#FFE8E8",
             padding: "4px",
             borderRadius: "6px",
             display: "inline-block",
