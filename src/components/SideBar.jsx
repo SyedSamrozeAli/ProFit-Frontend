@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiMenu, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Logo from "/images/profit-logo.png";
+import Logo2 from "/images/logo2.png";
 import SideBarLink from "./SideBarLink";
 import "../styles/dashboard.css";
 
@@ -20,7 +21,6 @@ function SideBar({ isOpen, setIsOpen }) {
     setIsFinanceOpen(!isFinanceOpen);
   };
 
-  // ... (keep all the SVG definitions)
   const dashboardSVG = (
     <svg
       width="26"
@@ -217,29 +217,33 @@ function SideBar({ isOpen, setIsOpen }) {
 
   return (
     <div
-      className={`bg-black h-screen ${
-        isOpen ? "w-[220px]" : "w-[60px]"
+      className={`bg-black h-full ${
+        isOpen ? "sm:w-full lg:w-[220px]" : "w-[60px]"
       } relative top-0 left-0 z-40 transition-all duration-300 sidebar ${
         isOpen ? "sm:relative" : "absolute"
       }  sm:relative sm:z-auto`}
     >
-      <div className="p-4 flex flex-col gap-4 justify-center">
+      <div className="p-4 flex flex-col gap-2 justify-center">
         <button
-          className="mb-5 text-white fixed z-50 top-5 left-4 sm:left-4"
+          className=" text-white z-50 top-5 left-4 sm:left-4"
           onClick={toggleSidebar}
         >
           <FiMenu size={24} />
         </button>
 
-        {isOpen && (
+        {isOpen ? (
           <div className="mb-4 mt-8">
             <img src={Logo} alt="Profit Logo" className="w-full h-auto" />
+          </div>
+        ) : (
+          <div className="mt-8">
+            <img src={Logo2} alt="Profit Logo" />
           </div>
         )}
 
         {/* Sidebar Links */}
         <div
-          className="flex flex-col gap-4 sm:gap-5"
+          className="flex flex-col gap-5 sm:gap-7"
           style={{
             marginTop: isOpen ? "0.7rem" : "4rem",
             paddingLeft: !isOpen ? "0" : "1rem",

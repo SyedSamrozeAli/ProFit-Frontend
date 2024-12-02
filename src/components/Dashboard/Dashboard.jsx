@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import StatsCard from "../components/Dashboard/StatsCard.jsx";
-import MonthlyInsights from "../components/Dashboard/Graphs/MonthlyInsights.jsx";
-import ActiveMembers from "../components/Dashboard/Graphs/ActiveMembers";
-import ExpenseDistribution from "../components/Dashboard/Graphs/ExpenseDistribution";
-import NavBar from "../components/NavBar";
+import StatsCard from "./StatsCard";
+import MonthlyInsights from "./Graphs/MonthlyInsights.jsx";
+import ActiveMembers from "./Graphs/ActiveMembers";
+import ExpenseDistribution from "./Graphs/ExpenseDistribution";
+import NavBar from "../NavBar";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

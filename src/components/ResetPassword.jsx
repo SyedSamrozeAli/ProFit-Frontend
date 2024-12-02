@@ -1,51 +1,47 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useAuth } from "../Auth/ContextAuth";
 import { Loader2 } from "lucide-react";
-import ReCAPTCHA from "react-google-recaptcha";
 
 function Login() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [confirmationPassword, setConfirmationPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();
 
-  const handleCaptchaChange = (token) => {
-    setRecaptchaToken(token); // Store the reCAPTCHA token
-  };
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const resetToken = queryParams.get("token");
+  console.log(resetToken);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!recaptchaToken) {
-      toast.error("Please complete the reCAPTCHA.");
-      return;
-    }
     setIsLoading(true);
 
     const data = {
-      email,
-      password,
-      recaptchaToken,
+      password: password,
+      password_confirmation: confirmationPassword,
+      token: resetToken,
     };
 
     axios
-      .post("http://profit-backend.test/api/admin/auth/login", data)
+      .post(`http://profit-backend.test/api/admin/auth/reset-password`, data)
       .then((response) => {
         if (response.data.success) {
-          console.log("Login Successful: ", response);
+          console.log("reset Successful: ", response);
+
           const token = response.data.data.token;
           localStorage.setItem("token", token);
+
           setIsAuthenticated("true");
 
-          setEmail("");
           setPassword("");
-          const successToast = toast.success("Logged In Successfully");
-          toast.update(successToast, { autoClose: 1000 });
-          navigate("/admin/dashboard");
+          setConfirmationPassword("");
+          const successToast = toast.success("Password Reset Successfully");
+          toast.update(successToast, {
+            autoClose: 1500,
+          });
         }
       })
       .catch((error) => {
@@ -55,18 +51,23 @@ function Login() {
           error.response.data &&
           error.response.data.message
         ) {
-          const emailError = error.response.data.message.email
-            ? error.response.data.message.email[0]
+          const passError = error.response.data.message.password
+            ? error.response.data.message.password[0]
             : null;
-          const passError = error.response.data.message
-            ? error.response.data.message[0]
+
+          const confirmPassError = error.response.data.message
+            .password_confirmation
+            ? error.response.data.message.password_confirmation[0]
             : null;
 
           const errorMsg =
-            emailError ||
             passError ||
+            confirmPassError ||
             "Invalid Credentials, Please Enter Correct Details";
-          toast.error(errorMsg);
+          const errorToast = toast.error(errorMsg);
+          toast.update(errorToast, {
+            autoClose: 1500,
+          });
         } else {
           toast.error("Invalid Response, Please Try Again Later!");
         }
@@ -76,55 +77,35 @@ function Login() {
       });
   };
 
-  const handleForgotPassword = () => {
-    navigate("/forgot-password");
-  };
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* Email Field */}
         <div className="mb-5">
-          <label className="block text-sm font-medium text-white">Email</label>
-          <input
-            placeholder="abc@gmail.com"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="text-gray-500 mt-1 block w-full px-2 py-2 border border-gray-300 outline-none rounded-md shadow-sm focus:ring-black-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        {/* Password Field */}
-        <div className="mb-2">
           <label className="block text-sm font-medium text-white">
-            Password
+            New Password
           </label>
           <input
             type="password"
-            placeholder="abc12345"
-            name="password"
-            value={password}
+            required
+            name="pasword"
             onChange={(e) => setPassword(e.target.value)}
             className="text-gray-500 mt-1 block w-full px-2 py-2 border border-gray-300 outline-none rounded-md shadow-sm focus:ring-black-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        {/* Forgot Password */}
-        <div className="mb-5">
-          <p
-            className="text-white text-sm hover:text-red-600 cursor-pointer"
-            onClick={handleForgotPassword}
-          >
-            Forgot Password?
-          </p>
-        </div>
-        {/* reCAPTCHA */}
-        <div className="recaptcha">
-          <ReCAPTCHA
-            sitekey="6LfKXI4qAAAAAH2j7Taq967pOmsJVOtyaHVoz6fp"
-            onChange={handleCaptchaChange}
+
+        <div className="mb-2">
+          <label className="block text-sm font-medium text-white">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            required
+            name="password_confirmation"
+            onChange={(e) => setConfirmationPassword(e.target.value)}
+            className="text-gray-500 mt-1 block w-full px-2 py-2 border border-gray-300 outline-none rounded-md shadow-sm focus:ring-black-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        {/* Submit Button */}
+
         <div className="mb-5">
           <button
             type="submit"
@@ -134,7 +115,7 @@ function Login() {
             {isLoading ? (
               <Loader2 className="h-5 w-5 animate-spin text-white" />
             ) : (
-              "Sign In"
+              "Reset Password"
             )}
           </button>
         </div>

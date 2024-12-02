@@ -1,7 +1,7 @@
 import Logo from "/images/profit-logo.png";
-import Login from "../components/Login.jsx";
+import ForgotPassword from "../components/ForgotPassword.jsx";
 
-function LoginPage() {
+function ForgotPasswordPage() {
   return (
     <div
       className="relative w-full h-screen bg-center bg-cover"
@@ -16,13 +16,13 @@ function LoginPage() {
         </div>
         <div className="bg-black bg-opacity-20 p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-xs sm:max-w-md backdrop-blur-lg">
           <p className="w-full flex flex-wrap justify-center text-white pb-7 text-sm sm:text-md">
-            Admin Portal
+            Forgot Password
           </p>
-          <Login />
+          <ForgotPassword />
         </div>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default ForgotPasswordPage;

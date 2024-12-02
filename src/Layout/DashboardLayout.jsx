@@ -1,4 +1,3 @@
-// import React from "react";
 import SideBar from "../components/SideBar";
 import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -41,7 +40,13 @@ function DashboardLayout() {
     >
       {/* <NavBar title={title} /> */}
       <SideBar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <Outlet />
+      <div
+        className={`my-content  ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
+      >
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer,btnText}) {
-  const token = localStorage.getItem('token');
+function TrainerForm({
+  msg,
+  profileImage,
+  requestType,
+  URL,
+  trainer,
+  setTrainer,
+  btnText,
+}) {
+  const token = localStorage.getItem("token");
 
-  
   // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -14,8 +21,8 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
       url: URL,
       data: trainer,
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => {
         console.log(response);
@@ -28,7 +35,7 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
         console.log(error);
         if (error.response.data && error.response.data.errors) {
           const errorList = error.response.data.errors;
-          errorList.forEach(msg => {
+          errorList.forEach((msg) => {
             console.log("Error", msg);
             toast.error(msg);
           });
@@ -37,7 +44,7 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
   };
 
   // for handling the input through forms
-    const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTrainer((prevTrainer) => ({
       ...prevTrainer,
@@ -54,28 +61,36 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
             alt="profile"
             className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full border-2 border-gray-300"
           />
-          <button type="button" className="mt-4 text-blue-500">Upload Photo</button>
+          <button type="button" className="mt-4 text-blue-500">
+            Upload Photo
+          </button>
         </div>
 
         <div className="flex-grow space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Full Name</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Full Name
+              </label>
               <input
+                required
                 type="text"
                 name="trainer_name"
-                value={trainer.trainer_name}  // Ensure the value is updated correctly
+                value={trainer.trainer_name} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter full name"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Age</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Age
+              </label>
               <input
+                required
                 type="number"
                 name="age"
-                value={trainer.age || ''}  // Ensure the value is updated correctly
+                value={trainer.age || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter age"
                 className="mt-1 p-2 w-full border rounded-md"
@@ -85,21 +100,27 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Date of Birth</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Date of Birth
+              </label>
               <input
+                required
                 type="date"
                 name="DOB"
-                value={trainer.DOB|| '' }  // Ensure the value is updated correctly
+                value={trainer.DOB || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Contact</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Contact
+              </label>
               <input
+                required
                 type="text"
                 name="phone_number"
-                value={trainer.phone_number|| ''}  // Ensure the value is updated correctly
+                value={trainer.phone_number || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter contact"
                 className="mt-1 p-2 w-full border rounded-md"
@@ -109,21 +130,26 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Email</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Email
+              </label>
               <input
+                required
                 type="email"
                 name="trainer_email"
-                value={trainer.trainer_email || '' }  // Ensure the value is updated correctly
+                value={trainer.trainer_email || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter email"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Gender</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Gender
+              </label>
               <select
                 name="gender"
-                value={trainer.gender|| ''}  // Ensure the value is updated correctly
+                value={trainer.gender || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 className="mt-1 p-2 w-full border rounded-md"
               >
@@ -137,22 +163,28 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">CNIC</label>
+              <label className="block text-sm font-medium text-gray-600">
+                CNIC
+              </label>
               <input
+                required
                 type="text"
                 name="CNIC"
-                value={trainer.CNIC|| ''}  // Ensure the value is updated correctly
+                value={trainer.CNIC || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter CNIC"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Experience</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Experience
+              </label>
               <input
+                required
                 type="number"
                 name="experience"
-                value={trainer.experience|| ''}  // Ensure the value is updated correctly
+                value={trainer.experience || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter experience in years"
                 className="mt-1 p-2 w-full border rounded-md"
@@ -162,22 +194,28 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Address</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Address
+              </label>
               <input
+                required
                 type="text"
                 name="trainer_address"
-                value={trainer.trainer_address|| ''}  // Ensure the value is updated correctly
+                value={trainer.trainer_address || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter address"
                 className="mt-1 p-2 w-full border rounded-md"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Salary (Rs)</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Salary (Rs)
+              </label>
               <input
+                required
                 type="text"
                 name="salary"
-                value={trainer.salary|| ''}  // Ensure the value is updated correctly
+                value={trainer.salary || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter salary"
                 className="mt-1 p-2 w-full border rounded-md"
@@ -187,11 +225,14 @@ function TrainerForm({ msg, profileImage, requestType, URL, trainer , setTrainer
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Rating</label>
+              <label className="block text-sm font-medium text-gray-600">
+                Rating
+              </label>
               <input
+                required
                 type="number"
                 name="rating"
-                value={trainer.rating|| ''}  // Ensure the value is updated correctly
+                value={trainer.rating || ""} // Ensure the value is updated correctly
                 onChange={handleInputChange}
                 placeholder="Enter Rating"
                 className="mt-1 p-2 w-full border rounded-md"
