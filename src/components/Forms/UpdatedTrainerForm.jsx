@@ -69,13 +69,10 @@ function UpdatedTrainerForm({
       <div className="flex flex-col md:flex-row md:space-x-10">
         <div className="flex-shrink-0 mb-6 md:mb-0">
           <img
-            src={profileImage}
+            src={`http://profit-backend.test/images/trainer/${trainer.trainer_profile_image}`}
             alt="profile"
             className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full border-2 border-gray-300"
           />
-          <button type="button" className="mt-4 text-blue-500">
-            Upload Photo
-          </button>
         </div>
 
         <div className="flex-grow space-y-4">
