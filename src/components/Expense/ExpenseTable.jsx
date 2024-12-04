@@ -1,24 +1,34 @@
-import React from "react";
 import DataTable from "react-data-table-component";
+import { MdDeleteOutline } from "react-icons/md";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useNavigate } from "react-router-dom";
 
-function ExpenseTable({ expenseData = [] }) {
+function ExpenseTable({ expenseData = [], handleDeleteField }) {
   const navigate = useNavigate();
 
   const data = expenseData.map((expense) => ({
     expense_id: expense.expense_id,
     expense_category_name:
-    expense.expense_category_name.charAt(0).toUpperCase() +
-    expense.expense_category_name.slice(1),
+      expense.expense_category_name.charAt(0).toUpperCase() +
+      expense.expense_category_name.slice(1),
     payment_amount: expense.payment_amount,
     due_date: expense.due_date,
     payment_method: expense.payment_method || "--",
     expense_status:
-    expense.expense_status.charAt(0).toUpperCase() +
-    expense.expense_status.slice(1),
+      expense.expense_status.charAt(0).toUpperCase() +
+      expense.expense_status.slice(1),
     paid_amount: expense.amount || "--",
+    action: (
+      <div className="flex space-x-2">
+        <button
+          onClick={() => handleDeleteField(expense.expense_id)}
+          className="p-2"
+        >
+          <MdDeleteOutline className="text-xl" />
+        </button>
+      </div>
+    ),
   }));
 
   const column = [
@@ -64,11 +74,18 @@ function ExpenseTable({ expenseData = [] }) {
       cell: (row) => (
         <span
           style={{
-            color: row.expense_status === "completed" ? "#EB0707" : "#0D7300",
-            background: row.expense_status === "completed" ? "#FFE8E8" : "#DFFFD7",
-            padding: "4px",
+            backgroundColor:
+              row.expense_status.toLowerCase() === "pending"
+                ? "#FFE8E8"
+                : "#DFFFD7",
+            color:
+              row.expense_status.toLowerCase() === "pending"
+                ? "#EB0707"
+                : "#0D7300",
+            padding: "5px",
             borderRadius: "6px",
             display: "inline-block",
+            fontWeight: "500",
           }}
         >
           {row.expense_status}
@@ -76,6 +93,7 @@ function ExpenseTable({ expenseData = [] }) {
       ),
       minWidth: "120px",
     },
+    { name: "Action", selector: (row) => row.action },
   ];
 
   const customStyles = {

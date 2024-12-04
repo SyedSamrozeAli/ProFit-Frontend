@@ -39,10 +39,10 @@ export default function MonthlyInsights() {
         if (response.data.success) {
           setChartData(response.data.data);
         } else {
-          toast.error("Failed to retrieve data.");
+          toast.error("Failed to retrieve monthly insights.");
         }
       } catch (error) {
-        toast.error("monthly insight ma error.");
+        toast.error("Failed to retrieve monthly insights.");
         console.error("Fetch error:", error);
       } finally {
         setLoading(false);
@@ -55,7 +55,9 @@ export default function MonthlyInsights() {
   return (
     <div className="bg-white p-4 rounded-lg shadow col-span-2 relative">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">Monthly Insights</h2>
+        <h2 className="text-lg font-semibold">
+          Monthly Expense Revenue Insights
+        </h2>
         <select
           value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}

@@ -64,7 +64,12 @@ function MemberTable({ memberData = [], handleDeleteField }) {
       cell: (row) => (
         <span
           style={{
-            color: row.membership_Type === "Premium" ? "#FFD700" : "#00796B",
+            color: row.membership_Type === "Premium" ? "#854d0e" : "#1e40af",
+            backgroundColor:
+              row.membership_Type === "Premium" ? "#fef9c3" : "#dbeafe",
+            padding: "4px",
+            borderRadius: "6px",
+            display: "inline-block",
           }}
         >
           {row.membership_Type}
@@ -95,6 +100,7 @@ function MemberTable({ memberData = [], handleDeleteField }) {
             padding: "4px",
             borderRadius: "6px",
             display: "inline-block",
+            fontWeight: "600",
           }}
         >
           {row.status}
@@ -149,7 +155,16 @@ function MemberTable({ memberData = [], handleDeleteField }) {
     ]);
 
     doc.autoTable({
-      head: [["Member ID", "Name", "Membership Type", "Admission Date", "Trainer Name", "Status"]],
+      head: [
+        [
+          "Member ID",
+          "Name",
+          "Membership Type",
+          "Admission Date",
+          "Trainer Name",
+          "Status",
+        ],
+      ],
       body: tableData,
     });
 
