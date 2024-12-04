@@ -338,25 +338,25 @@ function SideBar({ isOpen, setIsOpen }) {
             {isFinanceOpen && isOpen && (
               <div className="ml-4 flex flex-col gap-3 mt-4">
                 <SideBarLink
-                  text="Member Finance"
+                  text="Member"
                   to="/admin/member/payments"
                   isOpen={isOpen}
                 />
                 <SideBarLink
                   className="mt-4"
-                  text="Trainer Finance"
+                  text="Trainer"
                   to="/admin/trainer/payments"
                   isOpen={isOpen}
                 />
                 <SideBarLink
                   className="mt-4"
-                  text="Inventory Finance"
+                  text="Inventory"
                   to="/admin/inventory/payments"
                   isOpen={isOpen}
                 />
                 <SideBarLink
                   className="mt-4"
-                  text="Equipment Finance"
+                  text="Other Expense"
                   to="/admin/expense/payments"
                   isOpen={isOpen}
                 />
