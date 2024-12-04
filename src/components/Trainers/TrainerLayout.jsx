@@ -192,7 +192,7 @@ function TrainerLayout() {
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
                 <div className="relative">
                   <img
-                    src="/placeholder.svg"
+                    src={`http://profit-backend.test/images/trainer/${trainerData.trainer_profile_image}`}
                     alt="Trainer Profile"
                     width={160}
                     height={160}
