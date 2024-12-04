@@ -284,19 +284,21 @@ function UpdatedMemberForm({ msg, requestType, URL, initialMember, btnText }) {
                 Trainer (if any)
               </label>
               <select
-              name="trainer_id"
-              value={member.trainer_id || ""}
-              onChange={handleInputChange}
-              disabled={member.membership_type === "Standard"}
-              className="mt-1 p-2 w-full border rounded-md"
+                name="trainer_id"
+                value={member.trainer_id || ""}
+                onChange={handleInputChange}
+                disabled={member.membership_type === "Standard"}
+                className="mt-1 p-2 w-full border rounded-md"
               >
-              <option value="">Select Trainer</option>
-              {trainers.map((trainer) => (
-                <option key={trainer.trainer_id} value={trainer.trainer_id}>
-                  {trainer.trainer_id}
-                </option>
-              ))}
-            </select>
+                <option value="">Select Trainer</option>
+                {trainers
+                  .filter((trainer) => trainer.status === 1)
+                  .map((trainer) => (
+                    <option key={trainer.trainer_id} value={trainer.trainer_id}>
+                      {trainer.trainer_id}
+                    </option>
+                  ))}
+              </select>
             </div>
 
             <div>
