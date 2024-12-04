@@ -27,6 +27,7 @@ function NavBar({ title }) {
           <p className="text-lg sm:text-xl font-semibold">{title}</p>
         </div>
         <div className="relative flex items-center">
+          <p>Admin</p>
           <img
             src={profile}
             alt="User Avatar"
@@ -38,9 +39,6 @@ function NavBar({ title }) {
               className="absolute right-0 bg-white border border-gray-300 shadow-md rounded-lg w-40"
               style={{ top: "2.5rem", zIndex: 10 }} // Positions dropdown below the avatar
             >
-              <div className="px-4 py-2 border-b">
-                <p className="text-sm font-medium">Edit Profile</p>
-              </div>
               <ul>
                 <li>
                   <button

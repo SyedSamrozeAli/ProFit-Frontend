@@ -153,6 +153,7 @@ function TrainerTable({ trainerData = [], handleDeleteField }) {
             padding: "4px",
             borderRadius: "6px",
             display: "inline-block",
+            fontWeight: "500",
           }}
         >
           {row.status}
