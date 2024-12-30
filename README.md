@@ -79,4 +79,16 @@ Ensure the following are installed on your system:
 ## 🌐 Backend Repository
 The backend for this project is built using React and can be found <a href="https://github.com/SyedSamrozeAli/ProFit-Backend">here</a>.
 Follow the instructions in the Backend repository to set it up and connect it with the backend.
+
+## Contributors ✨
+
+| Name          | GitHub Profile                       | Role                |
+|---------------|--------------------------------------|---------------------|
+| Syed Samroze Ali      | [@syedsamrozeali](https://github.com/SyedSamrozeAli) | Backend Developer  |
+| Shaheer Beig   | [@shaheerbeig](https://github.com/shaheerbeig) | Frontend Developer   |
+| Shaheer Mumtaz   | [@shaheermumtaz](https://github.com/shaheermumtaz) | UI/UX Designer      |
+
+
+
+
     
