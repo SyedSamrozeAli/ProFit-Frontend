@@ -86,7 +86,7 @@ Follow the instructions in the Backend repository to set it up and connect it wi
 |---------------|--------------------------------------|---------------------|
 | Syed Samroze Ali      | [@syedsamrozeali](https://github.com/SyedSamrozeAli) | Backend Developer  |
 | Shaheer Beig   | [@shaheerbeig](https://github.com/shaheerbeig) | Frontend Developer   |
-| Shaheer Mumtaz   | [@shaheermumtaz](https://github.com/shaheermumtaz) | UI/UX Designer      |
+| Shaheer Mumtaz   | [@shaheermumtaz](https://github.com/Shaheer2003) | UI/UX Designer      |
 
 
 
