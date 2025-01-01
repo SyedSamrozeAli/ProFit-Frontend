@@ -23,10 +23,18 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const currDate = new Date();
+        const currMonth = currDate.getMonth() + 1;
+        const currentYear = currDate.getFullYear();
+
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          // params: {
+          //   month: currMonth,
+          //   year: currentYear,
+          // },
         };
 
         const [activeMembersData, activeMembersChange] = await Promise.all([
@@ -40,7 +48,10 @@ export default function Dashboard() {
         ]);
 
         const [revenueData, revenueChange] = await Promise.all([
-          axios.get("http://profit-backend.test/api/total-revenue", config),
+          axios.get(
+            "http://profit-backend.test/api/total-revenue?month=12&year=2024",
+            config
+          ),
           axios.get("http://profit-backend.test/api/revenue-growth", config),
         ]);
 
